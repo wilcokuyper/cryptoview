@@ -17,7 +17,7 @@ return [
     'facebook' => [
       'client_id' => env('FACEBOOK_APP_ID'),         // Your GitHub Client ID
       'client_secret' => env('FACEBOOK_APP_SECRET'), // Your GitHub Client Secret
-      'redirect' => 'http://localhost:8000/login/facebook/callback',
+      'redirect' => env('FACEBOOK_REDIRECT', 'http://localhost:8000/login/facebook/callback'),
     ],
 
     'mailgun' => [
