@@ -167,6 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
+         wilcokuyper\CurrencyReader\CurrencyReaderServiceProvider::class,
 
         /*
          * Application Service Providers...

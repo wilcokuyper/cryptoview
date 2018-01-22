@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,17 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware(['auth:api'])->group(function()
+{
+
+  Route::get('/user', function(Request $request)
+  {
     return $request->user();
+  });
+
+  Route::get('/currencies', "CurrencyController@CurrencyList");
+  Route::get('/prices', "CurrencyController@PriceList");
+
+  Route::apiResource('wallet', 'WalletController');
+
 });

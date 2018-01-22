@@ -11,6 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('login/{provider}', 'Auth\LoginController@login');
+Route::get('login/{provider}/callback', 'Auth\LoginController@login');
+Route::get('logout', function() {
+  Auth::logout();
+  return redirect('/');
 });
+
+Route::view('/{path?}', 'index')
+      ->where('path', '.*')
+      ->name('react');
+
+Auth::routes();

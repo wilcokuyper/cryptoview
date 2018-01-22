@@ -14,6 +14,12 @@ return [
     |
     */
 
+    'facebook' => [
+      'client_id' => env('FACEBOOK_APP_ID'),         // Your GitHub Client ID
+      'client_secret' => env('FACEBOOK_APP_SECRET'), // Your GitHub Client Secret
+      'redirect' => 'http://localhost:8000/login/facebook/callback',
+    ],
+
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),
@@ -30,7 +36,7 @@ return [
     ],
 
     'stripe' => [
-        'model' => App\User::class,
+        'model' => App\Models\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
