@@ -11,6 +11,13 @@ class WalletRepository
       return new WalletResource(WalletItem::where('userid', $user->id)->get());
     }
 
+    public function getCurrenciesInWallet(User $user)
+    {
+      return WalletItem::select('currency')->where([
+        ['userid', $user->id],
+      ])->distinct()->get();
+    }
+
     public function getItemByCurrency(User $user, $currency)
     {
       return WalletItem::where([

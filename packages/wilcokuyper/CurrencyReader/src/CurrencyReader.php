@@ -14,24 +14,18 @@ class CurrencyReader implements CurrencyReaderContract
     $this->currencyList = json_decode($json);
   }
 
-  public function DefaultSymbols()
+  public function GetSymbols($default = true)
   {
-    $defaultList = explode( ',', $this->currencyList->DefaultWatchlist->CoinIs);
-
     $currencies = [];
+
+    $defaultList = explode( ',', $this->currencyList->DefaultWatchlist->CoinIs);
     foreach($this->currencyList->Data as $currency)
     {
-      if (in_array($currency->Id, $defaultList))
+      if ($default && !in_array($currency->Id, $defaultList)) continue;
         $currencies[] = $currency->Symbol;
     }
-    return $currencies;
-  }
 
-  public function AllSymbols()
-  {
-    return array_map(function($i) {
-      return $i->Symbol;
-    }, $currencyList->Data);
+    return $currencies;
   }
 
   public function CoinList($default = true)
@@ -39,7 +33,7 @@ class CurrencyReader implements CurrencyReaderContract
     $currency_list = [];
     foreach( $this->currencyList->Data as $currency ) {
 
-      if( $default && !in_array( $currency->Symbol, $this->DefaultSymbols() ) ) continue;
+      if( $default && !in_array( $currency->Symbol, $this->GetSymbols($default) ) ) continue;
 
       $currency_list[] = array (
         'id' => $currency->Id,
@@ -51,12 +45,12 @@ class CurrencyReader implements CurrencyReaderContract
     return $currency_list;
   }
 
-  public function PriceList($default = true)
+  public function PriceList($requestedCurrencies = null, $default = true)
   {
     $convertTo = 'EUR';
-    $currencies = $default ? $this->DefaultSymbols() : $this->AllSymbols();
+    $currencies = null !== $requestedCurrencies ? $requestedCurrencies : $this->GetSymbols($default);
 
-    $prices = file_get_contents('https://min-api.cryptocompare.com/data/pricemulti?fsyms='. implode(',', $currencies) . '&tsyms='. $convertTo);
+    $prices = file_get_contents('https://min-api.cryptocompare.com/data/pricemulti?fsyms='. htmlspecialchars( implode(',', $currencies) ) . '&tsyms='. $convertTo);
     return json_decode($prices);
   }
 }

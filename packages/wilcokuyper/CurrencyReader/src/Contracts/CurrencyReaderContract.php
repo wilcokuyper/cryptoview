@@ -4,6 +4,6 @@ namespace wilcokuyper\CurrencyReader\Contracts;
 
 interface CurrencyReaderContract
 {
-  public function CoinList($default = true);
-  public function PriceList($default = true);
+  public function CoinList($default);
+  public function PriceList($requestedCurrency, $default);
 }
