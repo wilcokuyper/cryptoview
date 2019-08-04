@@ -15,5 +15,4 @@ class EncryptCookies extends Middleware
         //
     ];
 
-    protected static $serialize = true;
 }
