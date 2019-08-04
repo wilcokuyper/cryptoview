@@ -2,36 +2,56 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
 class AuthenticatedUser
 {
-    private $users;
+    protected $users;
 
+    /**
+     * AuthenticatedUser constructor.
+     *
+     * @param UserRepository $users
+     */
     public function __construct(UserRepository $users)
     {
-      $this->users = $users;
+        $this->users = $users;
     }
 
+    /**
+     * @param  $provider
+     * @param  $hasCode
+     * @param  $listener
+     * @return mixed
+     */
     public function execute($provider, $hasCode, $listener)
     {
-      if(!$hasCode) return $this->getAuth($provider);
+        if (!$hasCode) {
+            return $this->getAuth($provider);
+        }
 
-      $user = $this->users->findByEmailOrCreate($this->getUser($provider));
+        $user = $this->users->findByEmailOrCreate($this->getUser($provider));
 
-      Auth::login($user, true);
+        auth()->login($user, true);
 
-      return $listener->userHasLoggedIn($user);
+        return $listener->userHasLoggedIn($user);
     }
 
-    private function getAuth($provider)
+    /**
+     * @param  $provider
+     * @return mixed
+     */
+    protected function getAuth($provider)
     {
-      return Socialite::driver($provider)->redirect();
+        return Socialite::driver($provider)->redirect();
     }
 
-    private function getUser($provider)
+    /**
+     * @param  $provider
+     * @return mixed
+     */
+    protected function getUser($provider)
     {
-      return Socialite::driver($provider)->stateless()->user();
+        return Socialite::driver($provider)->stateless()->user();
     }
 }
