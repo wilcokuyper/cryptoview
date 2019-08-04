@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Auth;
-use Socialite;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthenticatedUser
 {
@@ -14,7 +14,7 @@ class AuthenticatedUser
       $this->users = $users;
     }
 
-    function execute($provider, $hasCode, $listener)
+    public function execute($provider, $hasCode, $listener)
     {
       if(!$hasCode) return $this->getAuth($provider);
 

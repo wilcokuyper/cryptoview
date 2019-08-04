@@ -6,7 +6,7 @@ use App\Http\Resources\WalletResource;
 
 class WalletRepository
 {
-    public function getWallet(User $user)
+    public function getWallet(User $user): WalletResource
     {
       return new WalletResource(WalletItem::where('userid', $user->id)->get());
     }
@@ -26,7 +26,7 @@ class WalletRepository
       ])->first();
     }
 
-    public function updateOrCreateItem(User $user, $currency, $amount)
+    public function updateOrCreateItem(User $user, $currency, $amount): WalletItem
     {
       $item = $this->getItemByCurrency($user, $currency);
       if(null === $item) {
