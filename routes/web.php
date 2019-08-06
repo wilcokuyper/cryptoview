@@ -13,10 +13,7 @@
 
 Route::get('login/{provider}', 'Auth\LoginController@login');
 Route::get('login/{provider}/callback', 'Auth\LoginController@login');
-Route::get('logout', function() {
-  Auth::logout();
-  return redirect('/');
-});
+Route::get('logout', 'Auth\LoginController@logout');
 
 Route::view('/{path?}', 'index')
       ->where('path', '.*')

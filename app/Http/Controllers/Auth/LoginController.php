@@ -6,7 +6,6 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\AuthenticatedUser;
-use Socialite;
 
 class LoginController extends Controller
 {
@@ -24,6 +23,17 @@ class LoginController extends Controller
       return redirect('/');
     }
     return redirect('/login');
-  }
+	}
+	
+	public function logout()
+	{
+			Auth::logout();
+			return redirect('/');
+	}
+	
+	public function getUser(Request $request)
+	{
+		return $request->user();
+	}
 
 }

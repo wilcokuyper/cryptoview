@@ -17,10 +17,7 @@ use Illuminate\Http\Response;
 Route::middleware(['auth:api'])->group(function()
 {
 
-  Route::get('/user', function(Request $request)
-  {
-    return $request->user();
-  });
+  Route::get('/user', 'Auth\LoginController@getUser');
 
   Route::get('/currencies', "CurrencyController@CurrencyList");
   Route::get('/prices', "CurrencyController@PriceList");
