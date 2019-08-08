@@ -1,30 +1,25 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Animated.css';
 
-export default class Animated extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      containerClass: 'bg-white'
-    }
-  }
+export default function (props) {
+  const [containerClass, setContainerClass] = useState('bg-white');
 
-  componentWillReceiveProps(nextProps, nextState) {
-    if (nextProps.value > this.props.value ) {
-      this.setState({containerClass: 'price-up animated'});
-    } else if (nextProps.value < this.props.value) {
-      this.setState({containerClass: 'price-down animated'})
+  const prevCountRef = useRef();
+  useEffect(() => {
+    if (props.value > prevCountRef.current ) {
+      setContainerClass('price-up animated');
+    } else if (props.value < prevCountRef.current) {
+      setContainerClass('price-down animated');
     } else {
-      this.setState({containerClass: ''})
+      setContainerClass('bg-white');
     }
-  }
 
-  render() {
-    return (
-      <div className={this.state.containerClass}>
-      { this.props.children }
-      </div>
-    )
-  }
+    prevCountRef.current = props.value;
+  }, [props.value]);
 
+  return (
+    <div className={containerClass}>
+    { props.children }
+    </div>
+  )
 }

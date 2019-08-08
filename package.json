@@ -10,23 +10,25 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
-        "axios": "^0.18",
-        "babel-preset-react": "^6.23.0",
+        "axios": "^0.19",
         "cross-env": "^5.1",
         "jquery": "^3.2",
-        "laravel-mix": "^1.0",
-        "lodash": "^4.17.4",
-        "react": "^15.4.2",
-        "react-dom": "^15.4.2"
+        "laravel-mix": "^4.0.7",
+        "lodash": "^4.17.15",
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6",
+        "resolve-url-loader": "^2.3.1",
+        "sass": "^1.15.2",
+        "sass-loader": "^7.1.0"
     },
     "dependencies": {
-        "moment": "^2.20.1",
+        "moment": "^2.24.0",
         "numeral": "^2.0.6",
-        "react-redux": "^5.0.6",
-        "react-router": "^4.2.0",
-        "react-router-dom": "^4.2.2",
-        "redux": "^3.7.2",
-        "redux-form": "^7.2.0",
-        "redux-thunk": "^2.2.0"
+        "react-redux": "^7.1.0",
+        "react-router": "^5.0.1",
+        "react-router-dom": "^5.0.1",
+        "redux": "^4.0.4",
+        "redux-form": "^8.2.2",
+        "redux-thunk": "^2.3.0"
     }
 }

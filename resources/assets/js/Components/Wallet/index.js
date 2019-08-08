@@ -1,8 +1,19 @@
-import React, { Component } from 'react';
+import React , { useEffect }from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import WalletItem from './WalletItem';
 import numeral from 'numeral';
+import {fetchPrices} from '../../actions';
 
-export default ({ items, prices, editItem, deleteItem }) => {
+export default ({ items, editItem, deleteItem }) => {
+  const prices = useSelector(state => state.currencies.prices);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const interval = setInterval(() => dispatch(fetchPrices()), 10000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const totalValue = items.reduce((sum, item) => {
     const price = prices[item.currency] && prices[item.currency].EUR;
     return sum += item.amount * price;

@@ -1,30 +1,23 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 export default (ComposedComponent) => {
-
-  class AuthComponent extends Component {
-    render() {
-      if (this.props.isAuthenticating) {
-        return <div className="container">Logging in...</div>
+  const isAuthenticating = useSelector(state => state.auth.isAuthenticating);
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  
+  return function (props) {
+    if (isAuthenticating) {
+       return <div className="container">Logging in...</div>
+    } else {
+      if (isAuthenticated) {
+        return <ComposedComponent {...props} />
       } else {
-        if (this.props.isAuthenticated) {
-          return <ComposedComponent {...this.props} />
-        } else {
-          return <Redirect to={{
-            pathname: '/login',
-            state: { from: this.props.location }
-          }} />
-        }
+        return <Redirect to={{
+          pathname: '/login',
+          state: { from: props.location }
+        }} />
       }
     }
   }
-
-  const mapStateToProps = state => ({
-    isAuthenticating: state.auth.isAuthenticating,
-    isAuthenticated: state.auth.isAuthenticated
-  });
-
-  return connect(mapStateToProps)(AuthComponent);
 }
