@@ -1,23 +1,36 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {updateWalletItem, deleteWalletItem} from '../../actions';
+import { updateWalletItem, setSelectedAsset } from '../../actions';
 
 import Wallet from '../Wallet';
-import AddWalletItem from '../../Helpers/Dialogs/AddWalletItem';
+import AddAsset from '../../Helpers/Dialogs/AddAsset';
+import EditAsset from '../../Helpers/Dialogs/EditAsset';
+import Modal from '../Modal';
+import useModal from '../../Helpers/useModal';
 
-function _updateWallet(values) {
-  updateWalletItem(values, 'add').then(() => $('#addCurrencyModal').modal('hide'));
-}
-
-function _deleteWalletItem(id) {
-  deleteWalletItem(id);
-}
-
-export default function () {
-  const currencyTypes = useSelector(state => state.currencies.types);
-  const wallet = useSelector(state => state.wallet);
-
+export default () => {
   const dispatch = useDispatch();
+  
+  const currencyTypes = useSelector(state => state.currencies.types);
+  const selectedAsset = useSelector(state => state.wallet.selectedAsset);
+
+  const [showingAddModal, toggleAddModal] = useModal();
+  const [showingEditModal, toggleEditModal] = useModal();
+
+  const updateWallet = (values, update = false) => {
+    dispatch(updateWalletItem(values, update));
+
+    if (update) {
+      toggleEditModal();
+    } else {
+      toggleAddModal();
+    }
+  }
+
+  const handleEditItem = values => {
+    dispatch(setSelectedAsset(values,));
+    toggleEditModal();
+  }
 
   return (
     <div>
@@ -28,18 +41,34 @@ export default function () {
 
             <div className="d-flex">
               <h1 className="mr-auto">Cryptoview</h1>
-              <button className="btn btn-primary ml-auto" data-toggle="modal" data-target="#addCurrencyModal"><i className="fa fa-plus" aria-hidden="true"></i></button>
+              <button className="btn btn-primary ml-auto" onClick={toggleAddModal}>
+                <i className="fa fa-plus" aria-hidden="true"></i>
+              </button>
             </div>
 
             <p>View your cryptocurrency balances</p>
-            <Wallet items={wallet} editItem={() => {}} deleteItem={() => dispatch(_deleteWalletItem())} />
+            <Wallet handleEditItem={handleEditItem} />
 
           </div>
         </div>
       </div>
 
-      <AddWalletItem currencies={currencyTypes} onSubmit={values => dispatch(_updateWallet(values))} />
+      <Modal isShowing={showingAddModal} hide={toggleAddModal} title="Add a currency to your wallet">
+        <AddAsset
+          currencies={currencyTypes}
+          onSubmit={values => updateWallet(values)}
+          onCancel={toggleAddModal}
+        />
+      </Modal>
 
+      <Modal isShowing={showingEditModal} hide={toggleEditModal} title="Edit your wallet">
+        <EditAsset
+        initialValues={{amount: selectedAsset.amount, currency: selectedAsset.currency}}
+          onSubmit={values => updateWallet(values, true)}
+          onCancel={toggleEditModal}
+        />
+      </Modal>
+      
     </div>
   );
 }

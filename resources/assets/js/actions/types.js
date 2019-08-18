@@ -6,3 +6,5 @@ export const UPDATE_WALLET    = 'update_wallet';
 
 export const FETCH_CURRENCIES = 'fetch_currencies';
 export const FETCH_PRICES     = 'fetch_prices';
+
+export const SET_SELECTED_ASSET = 'set_selected_asset';

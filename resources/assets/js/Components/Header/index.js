@@ -3,31 +3,31 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './style.css';
 
-function renderAuthContent(auth) {
-  switch(auth.isAuthenticated) {
-    case null:
-      return;
+export default () => {
+  const auth = useSelector(state => state.auth);
 
-    case false:
-      return <li><a href="/login/facebook" className="nav-link">Login</a></li>;
-
-    default:
-      return (
-        <li className="nav-item dropdown">
-          <a className="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-            <img src={auth.user.avatar} className="mr-3 round" height="38"/>
-            {auth.user.name}
-          </a>
-          <div className="dropdown-menu">
-            <a className="dropdown-item" href="/logout">Logout</a>
-          </div>
-        </li>
-      );
+  const renderAuthContent = auth => {
+    switch(auth.isAuthenticated) {
+      case null:
+        return;
+  
+      case false:
+        return <li><a href="/login/facebook" className="nav-link">Login</a></li>;
+  
+      default:
+        return (
+          <li className="nav-item dropdown">
+            <a className="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              <img src={auth.user.avatar} className="mr-3 round" height="38"/>
+              {auth.user.name}
+            </a>
+            <div className="dropdown-menu">
+              <a className="dropdown-item" href="/logout">Logout</a>
+            </div>
+          </li>
+        );
+    }
   }
-}
-
-export default function () {
-  const auth = useSelector(state => state.auth)
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-info mb-5">

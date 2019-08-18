@@ -26,18 +26,20 @@ class WalletRepository
       ])->first();
     }
 
-    public function updateOrCreateItem(User $user, $currency, $amount): WalletItem
+    public function updateOrCreateItem(User $user, $currency, $amount, $update = false): WalletItem
     {
       $item = $this->getItemByCurrency($user, $currency);
-      if(null === $item) {
+      if (null === $item) {
         $item = new WalletItem();
         $item->userid = $user->id;
         $item->currency = $currency;
         $item->amount = floatval($amount);
-      }
-      else
-      {
-        $item->amount += $amount;
+      } else {
+        if ($update) {
+          $item->amount = $amount;
+        } else {
+          $item->amount += $amount;
+        }
       }
       $item->save();
 

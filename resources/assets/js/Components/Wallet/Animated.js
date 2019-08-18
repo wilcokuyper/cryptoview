@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Animated.css';
 
-export default function (props) {
-  const [containerClass, setContainerClass] = useState('bg-white');
+export default props => {
+  const [containerClass, setContainerClass] = useState('');
 
   const prevCountRef = useRef();
   useEffect(() => {
@@ -11,7 +11,7 @@ export default function (props) {
     } else if (props.value < prevCountRef.current) {
       setContainerClass('price-down animated');
     } else {
-      setContainerClass('bg-white');
+      setContainerClass('');
     }
 
     prevCountRef.current = props.value;

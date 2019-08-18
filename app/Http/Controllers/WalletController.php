@@ -46,40 +46,11 @@ class WalletController extends Controller
             $this->walletRepository->updateOrCreateItem(
                 $request->user(),
                 $request->input('currency'),
-                $request->input('amount')
+                $request->input('amount'),
+                $request->get('update', false)
             );
         }
 
-        return $this->index($request);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  WalletItem $walletItem
-     * @return void
-     */
-    public function show(WalletItem $walletItem)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  WalletItem               $walletItem
-     * @return JsonResponse
-     */
-    public function update(Request $request, WalletItem $walletItem): JsonResponse
-    {
-        if ($request->has('currency') && $request->has('amount')) {
-            $this->walletRepository->updateOrCreateItem(
-                $request->user(),
-                $walletItem->currency,
-                $walletItem->amount
-            );
-        }
         return $this->index($request);
     }
 

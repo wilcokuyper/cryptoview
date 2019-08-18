@@ -4,7 +4,9 @@ import numeral from 'numeral';
 import Animated from './Animated';
 
 export default ({ values, price, handleEditItem, handleDeleteItem }) => {
+
   const { id, currency, amount, updated_at } = values;
+  
   return (
     <tr>
       <td>{currency}</td>

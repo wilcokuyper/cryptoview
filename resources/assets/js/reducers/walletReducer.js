@@ -1,12 +1,20 @@
-import { FETCH_WALLET, UPDATE_WALLET } from '../actions/types';
+import { FETCH_WALLET, UPDATE_WALLET, SET_SELECTED_ASSET } from '../actions/types';
 
-export default (state = [], action) => {
+const initialState = {
+  assets: [],
+  selectedAsset: {}
+};
+
+export default (state = initialState, action) => {
   switch(action.type) {
     case FETCH_WALLET:
-      return action.payload;
+      return { ...state, assets: action.payload };
 
     case UPDATE_WALLET:
-      return action.payload;
+      return { ...state, assets: action.payload };
+
+    case SET_SELECTED_ASSET:
+      return { ...state, selectedAsset: action.payload };
 
     default:
       return state;

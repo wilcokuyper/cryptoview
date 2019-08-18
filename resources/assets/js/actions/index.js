@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOGIN_REQUEST, FETCH_USER, FETCH_WALLET, UPDATE_WALLET, FETCH_CURRENCIES, FETCH_PRICES } from './types';
+import { LOGIN_REQUEST, FETCH_USER, FETCH_WALLET, UPDATE_WALLET, FETCH_CURRENCIES, FETCH_PRICES, SET_SELECTED_ASSET } from './types';
 
 export const fetchUser = () => async dispatch => {
   dispatch({ type: LOGIN_REQUEST });
@@ -17,8 +17,8 @@ export const fetchWallet = () => async dispatch => {
   dispatch({ type: FETCH_WALLET, payload: res.data });
 }
 
-export const updateWalletItem = (values) => async dispatch => {
-  const res = await axios.post('/api/wallet', values);
+export const updateWalletItem = (values, update = false) => async dispatch => {
+  const res = await axios.post('/api/wallet', {...values, update});
   dispatch({ type: UPDATE_WALLET, payload: res.data });
 }
 
@@ -35,4 +35,8 @@ export const fetchCurrencies = () => async dispatch => {
 export const fetchPrices = () => async dispatch => {
   const res = await axios.get('/api/prices');
   dispatch({ type: FETCH_PRICES, payload: res.data });
+}
+
+export const setSelectedAsset = asset => dispatch => {
+  dispatch({ type: SET_SELECTED_ASSET, payload: asset });
 }

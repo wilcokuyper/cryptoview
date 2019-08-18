@@ -2,12 +2,17 @@ import React , { useEffect }from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import WalletItem from './WalletItem';
 import numeral from 'numeral';
-import {fetchPrices} from '../../actions';
+import {fetchPrices, updateWalletItem, deleteWalletItem} from '../../actions';
 
-export default ({ items, editItem, deleteItem }) => {
+export default ({ handleEditItem }) => {
   const prices = useSelector(state => state.currencies.prices);
+  const items = useSelector(state => state.wallet.assets);
+
+  // const editItem = values => updateWalletItem(values, 'add').then(() => $('#addCurrencyModal').modal('hide'));
+  const deleteItem = id => deleteWalletItem(id);
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     const interval = setInterval(() => dispatch(fetchPrices()), 10000);
 
@@ -42,11 +47,12 @@ export default ({ items, editItem, deleteItem }) => {
       {
         items.map( i => {
           const price = prices[i.currency] && prices[i.currency].EUR;
-          return <WalletItem key={i.id}
-                            values={i}
-                            price={price}
-                            handleEditItem={editItem}
-                            handleDeleteItem={deleteItem}
+          return <WalletItem
+                    key={i.id}
+                    values={i}
+                    price={price}
+                    handleEditItem={handleEditItem}
+                    handleDeleteItem={id => dispatch(deleteItem(id))}
                 />
         })
       }
