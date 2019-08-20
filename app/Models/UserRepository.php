@@ -10,15 +10,11 @@ class UserRepository
      */
     public function findByEmailOrCreate($user)
     {
-        return User::firstOrCreate(
-            [
+        return User::firstOrCreate([
             'email' => $user->email,
-            ]
-        )->fill(
-            [
-                'name' => $user->name,
-                'avatar' => $user->avatar,
-            ]
-        );
+        ])->fill([
+            'name' => $user->name,
+            'avatar' => $user->avatar,
+        ]);
     }
 }
