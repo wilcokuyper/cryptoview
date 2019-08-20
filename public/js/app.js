@@ -275,7 +275,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, ".animated {\r\n  -webkit-animation: 3s ease-in 1;\r\n          animation: 3s ease-in 1;\r\n}\r\n\r\n@-webkit-keyframes price-up {\r\n  0% {\r\n    background-color: #00ff00;\r\n  }\r\n  100% {\r\n    background-color:none;\r\n  }\r\n}\r\n\r\n@keyframes price-up {\r\n  0% {\r\n    background-color: #00ff00;\r\n  }\r\n  100% {\r\n    background-color:none;\r\n  }\r\n}\r\n\r\n@-webkit-keyframes price-down {\r\n  0% {\r\n    background-color: #ff0000;\r\n  }\r\n  100% {\r\n    background-color: none;\r\n  }\r\n}\r\n\r\n@keyframes price-down {\r\n  0% {\r\n    background-color: #ff0000;\r\n  }\r\n  100% {\r\n    background-color: none;\r\n  }\r\n}\r\n\r\n.price-up {\r\n  -webkit-animation-name: price-up;\r\n          animation-name: price-up;\r\n}\r\n\r\n.price-down {\r\n  -webkit-animation-name: price-down;\r\n          animation-name: price-down;\r\n}\r\n", ""]);
+exports.push([module.i, ".animated {\r\n  -webkit-animation: 3s ease-in 1;\r\n          animation: 3s ease-in 1;\r\n}\r\n\r\n@-webkit-keyframes price-up {\r\n  0% {\r\n    color: #00ff00;\r\n  }\r\n  100% {\r\n    color:none;\r\n  }\r\n}\r\n\r\n@keyframes price-up {\r\n  0% {\r\n    color: #00ff00;\r\n  }\r\n  100% {\r\n    color:none;\r\n  }\r\n}\r\n\r\n@-webkit-keyframes price-down {\r\n  0% {\r\n    color: #ff0000;\r\n  }\r\n  100% {\r\n    color: none;\r\n  }\r\n}\r\n\r\n@keyframes price-down {\r\n  0% {\r\n    color: #ff0000;\r\n  }\r\n  100% {\r\n    color: none;\r\n  }\r\n}\r\n\r\n.price-up {\r\n  -webkit-animation-name: price-up;\r\n          animation-name: price-up;\r\n}\r\n\r\n.price-up:after {\r\n  content: '\\F35B';\r\n  font-family: \"Font Awesome 5 Free\";\r\n  color: green;\r\n  display: inline-block;\r\n  margin-left: 5px;\r\n}\r\n\r\n.price-down {\r\n  -webkit-animation-name: price-down;\r\n          animation-name: price-down;\r\n}\r\n\r\n.price-down:after {\r\n  content: '\\F358';\r\n  font-family: \"Font Awesome 5 Free\";\r\n  color: red;\r\n  display: inline-block;\r\n  margin-left: 5px;\r\n}\r\n", ""]);
 
 // exports
 
@@ -58908,17 +58908,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
     className: "row"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-sm"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "d-flex"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
-    className: "mr-auto"
-  }, "Cryptoview"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "btn btn-primary ml-auto",
-    onClick: toggleAddModal
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fa fa-plus",
-    "aria-hidden": "true"
-  }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "View your cryptocurrency balances"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Wallet__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Cryptoview"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "View your cryptocurrency balances"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Wallet__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    handleAddItem: toggleAddModal,
     handleEditItem: handleEditItem
   })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Modal__WEBPACK_IMPORTED_MODULE_6__["default"], {
     isShowing: showingAddModal,
@@ -59312,19 +59303,15 @@ __webpack_require__.r(__webpack_exports__);
       currency = values.currency,
       amount = values.amount,
       updated_at = values.updated_at;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, currency), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-    className: "text-right"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Animated__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    value: price
-  }, numeral__WEBPACK_IMPORTED_MODULE_2___default()(price).format('0,0.00'))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-    className: "text-right"
-  }, numeral__WEBPACK_IMPORTED_MODULE_2___default()(amount).format('0,0.0000')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-    className: "text-right"
-  }, numeral__WEBPACK_IMPORTED_MODULE_2___default()(price * amount).format('0,0.00')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-    className: "text-right"
-  }, moment__WEBPACK_IMPORTED_MODULE_1___default()(updated_at).format('D-M-Y')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-    className: "text-right"
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-12 col-md-6 col-lg-4"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "card mb-2 p-2"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "d-flex mb-1"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+    className: "flex-grow-1"
+  }, currency), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "btn-group btn-group-sm",
     role: "group",
     "aria-label": "Edit currency {currency}"
@@ -59335,7 +59322,7 @@ __webpack_require__.r(__webpack_exports__);
       return handleEditItem(values);
     }
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fa fa-pencil",
+    className: "fa fa-edit",
     "aria-hidden": "true"
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     type: "button",
@@ -59346,7 +59333,19 @@ __webpack_require__.r(__webpack_exports__);
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fa fa-trash",
     "aria-hidden": "true"
-  })))));
+  }))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
+    className: "text-right"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Animated__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    value: price
+  }, numeral__WEBPACK_IMPORTED_MODULE_2___default()(price).format('0,0.00'))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "text-right"
+  }, numeral__WEBPACK_IMPORTED_MODULE_2___default()(amount).format('0,0.0000')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "d-flex justify-content-between"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "text-left"
+  }, moment__WEBPACK_IMPORTED_MODULE_1___default()(updated_at).format('D-M-Y')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "text-right"
+  }, numeral__WEBPACK_IMPORTED_MODULE_2___default()(price * amount).format('0,0.00')))));
 });
 
 /***/ }),
@@ -59373,7 +59372,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
-  var handleEditItem = _ref.handleEditItem;
+  var handleAddItem = _ref.handleAddItem,
+      handleEditItem = _ref.handleEditItem;
   var prices = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["useSelector"])(function (state) {
     return state.currencies.prices;
   });
@@ -59398,37 +59398,25 @@ __webpack_require__.r(__webpack_exports__);
     var price = prices[item.currency] && prices[item.currency].EUR;
     return sum += item.amount * price;
   }, 0);
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
-    className: "table table-responsive-md table-hover"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-    scope: "col",
-    width: "50"
-  }, "Currency"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-    scope: "col",
-    width: "150",
-    className: "text-right"
-  }, "Avg. Price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-    scope: "col",
-    width: "150",
-    className: "text-right"
-  }, "Amount"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-    scope: "col",
-    width: "150",
-    className: "text-right"
-  }, "Total"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-    scope: "col",
-    width: "200",
-    className: "text-right"
-  }, "Last update"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-    scope: "col",
-    className: "text-right",
-    width: "50"
-  }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tfoot", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Total:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-    colSpan: "3",
-    className: "text-right"
-  }, numeral__WEBPACK_IMPORTED_MODULE_3___default()(totalValue).format('0,0.00')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-    colSpan: "2"
-  }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, items.map(function (i) {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "d-flex p-2 mb-2 bg-secondary"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "flex-grow-1"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "text-white align-middle"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Total:"), " ", numeral__WEBPACK_IMPORTED_MODULE_3___default()(totalValue).format('0,0.00'))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "btn-group btn-group-sm",
+    role: "group",
+    "aria-label": "wallet actions"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-light ml-auto",
+    onClick: handleAddItem
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fa fa-plus",
+    "aria-hidden": "true"
+  })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row"
+  }, items.map(function (i) {
     var price = prices[i.currency] && prices[i.currency].EUR;
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_WalletItem__WEBPACK_IMPORTED_MODULE_2__["default"], {
       key: i.id,

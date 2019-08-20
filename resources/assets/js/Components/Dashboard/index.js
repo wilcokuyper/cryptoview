@@ -39,15 +39,13 @@ export default () => {
         <div className="row">
           <div className="col-sm">
 
-            <div className="d-flex">
-              <h1 className="mr-auto">Cryptoview</h1>
-              <button className="btn btn-primary ml-auto" onClick={toggleAddModal}>
-                <i className="fa fa-plus" aria-hidden="true"></i>
-              </button>
-            </div>
-
+            <h1>Cryptoview</h1>
             <p>View your cryptocurrency balances</p>
-            <Wallet handleEditItem={handleEditItem} />
+
+            <Wallet
+              handleAddItem={toggleAddModal}
+              handleEditItem={handleEditItem}
+            />
 
           </div>
         </div>
