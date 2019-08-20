@@ -3,6 +3,8 @@
 namespace wilcokuyper\CurrencyReader;
 
 use Illuminate\Support\ServiceProvider;
+use wilcokuyper\CurrencyReader\Contracts\CryptoCurrencyDataContract;
+use wilcokuyper\CurrencyReader\Providers\CryptoCompareProvider;
 
 class CurrencyReaderServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,14 @@ class CurrencyReaderServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->publishes([
+            __DIR__.'/config/cryptocompare.php' => config_path('cryptocompare.php'),
+        ]);
+
+        $this->mergeConfigFrom(
+            __DIR__.'/config/cryptocompare.php',
+            'cryptocompare'
+        );
     }
 
     /**
@@ -23,8 +32,14 @@ class CurrencyReaderServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        return $this->app->singleton(CurrencyReader::class, function($app) {
-          return new CurrencyReader();
+        $this->app->singleton(CryptoCurrencyDataContract::class, function ($app) {
+            return new CryptoCompareProvider(config('cryptocompare.endpoint'), config('cryptocompare.api_key'));
+        });
+
+        $this->app->singleton(CurrencyReader::class, function ($app) {
+            $provider = app(CryptoCurrencyDataContract::class);
+
+            return new CurrencyReader($provider);
         });
     }
 }

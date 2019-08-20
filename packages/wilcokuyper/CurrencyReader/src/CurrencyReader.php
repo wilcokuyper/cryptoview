@@ -2,55 +2,67 @@
 
 namespace wilcokuyper\CurrencyReader;
 
+use wilcokuyper\CurrencyReader\Contracts\CryptoCurrencyDataContract;
 use wilcokuyper\CurrencyReader\Contracts\CurrencyReaderContract;
 
 class CurrencyReader implements CurrencyReaderContract
 {
-  protected $currencyList;
+    protected $currencyList;
 
-  public function __construct()
-  {
-    $json = file_get_contents('https://www.cryptocompare.com/api/data/coinlist/');
-    $this->currencyList = json_decode($json);
-  }
+    protected $provider;
 
-  public function GetSymbols($default = true)
-  {
-    $currencies = [];
-
-    $defaultList = explode( ',', $this->currencyList->DefaultWatchlist->CoinIs);
-    foreach($this->currencyList->Data as $currency)
+    public function __construct(CryptoCurrencyDataContract $provider)
     {
-      if ($default && !in_array($currency->Id, $defaultList)) continue;
-        $currencies[] = $currency->Symbol;
+        $this->provider = $provider;
     }
 
-    return $currencies;
-  }
+    public function getSymbols($default = true)
+    {
+        $currencies = [];
 
-  public function CoinList($default = true)
-  {
-    $currency_list = [];
-    foreach( $this->currencyList->Data as $currency ) {
+        $defaultList = explode(',', $this->getCurrencyList()['DefaultWatchlist']['CoinIs']);
+        foreach ($this->getCurrencyList()['Data'] as $currency) {
+            if ($default && !in_array($currency['Id'], $defaultList)) {
+                continue;
+            }
+                $currencies[] = $currency['Symbol'];
+        }
 
-      if( $default && !in_array( $currency->Symbol, $this->GetSymbols($default) ) ) continue;
-
-      $currency_list[] = array (
-        'id' => $currency->Id,
-        'name' => $currency->FullName,
-        'symbol' => $currency->Symbol,
-      );
+        return $currencies;
     }
 
-    return $currency_list;
-  }
+    public function getCoinList($default = true) : array
+    {
+        $currency_list = [];
 
-  public function PriceList($requestedCurrencies = null, $default = true)
-  {
-    $convertTo = 'EUR';
-    $currencies = null !== $requestedCurrencies ? $requestedCurrencies : $this->GetSymbols($default);
+        foreach ($this->getCurrencyList()['Data'] as $currency) {
+            if ($default && !in_array($currency['Symbol'], $this->getSymbols($default))) {
+                continue;
+            }
 
-    $prices = file_get_contents('https://min-api.cryptocompare.com/data/pricemulti?fsyms='. htmlspecialchars( implode(',', $currencies) ) . '&tsyms='. $convertTo);
-    return json_decode($prices);
-  }
+            $currency_list[] = [
+                'id' => $currency['Id'],
+                'name' => $currency['FullName'],
+                'symbol' => $currency['Symbol'],
+            ];
+        }
+
+        return $currency_list;
+    }
+
+    public function getPriceList($requestedCurrencies = null, $default = true) : array
+    {
+        $currencies = $requestedCurrencies ?? $this->GetSymbols($default);
+
+        return $this->provider->getPrices($currencies);
+    }
+
+    protected function getCurrencyList()
+    {
+        if (!isset($this->currencyList)) {
+            $this->currencyList = $this->provider->getSymbols();
+        }
+
+        return $this->currencyList;
+    }
 }
