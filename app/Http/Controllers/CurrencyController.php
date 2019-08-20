@@ -12,20 +12,20 @@ class CurrencyController extends Controller
 
     public function __construct(WalletRepository $walletRepository)
     {
-      $this->walletRepository = $walletRepository;
+        $this->walletRepository = $walletRepository;
     }
 
-    public function CurrencyList(CurrencyReader $reader, $default = false)
+    public function getCurrencyList(CurrencyReader $reader, $default = false)
     {
-      return response()->json($reader->CoinList($default));
+        return response()->json($reader->getCoinList($default));
     }
 
-    public function PriceList(Request $request, CurrencyReader $reader, $default = true)
+    public function getPriceList(Request $request, CurrencyReader $reader, $default = true)
     {
-      $userCurrencies = array_map(function($i) {
-        return $i['currency'];
-      }, $this->walletRepository->getCurrenciesInWallet($request->user())->toArray());
+        $userCurrencies = array_map(function ($i) {
+            return $i['currency'];
+        }, $this->walletRepository->getCurrenciesInWallet($request->user())->toArray());
 
-      return response()->json($reader->PriceList($userCurrencies));
+        return response()->json($reader->getPriceList($userCurrencies));
     }
 }

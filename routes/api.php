@@ -14,14 +14,11 @@ use Illuminate\Http\Response;
 |
 */
 
-Route::middleware(['auth:api'])->group(function()
-{
+Route::middleware(['auth:api'])->group(function () {
+    Route::get('/user', 'Auth\LoginController@getUser');
 
-  Route::get('/user', 'Auth\LoginController@getUser');
+    Route::get('/currencies', "CurrencyController@getCurrencyList");
+    Route::get('/prices', "CurrencyController@getPriceList");
 
-  Route::get('/currencies', "CurrencyController@CurrencyList");
-  Route::get('/prices', "CurrencyController@PriceList");
-
-  Route::apiResource('wallet', 'WalletController');
-
+    Route::apiResource('wallet', 'WalletController');
 });
