@@ -2,6 +2,7 @@
 
 namespace wilcokuyper\CurrencyReader\Providers;
 
+use Illuminate\Support\Str;
 use wilcokuyper\CurrencyReader\Contracts\CryptoCurrencyDataContract;
 
 class CryptoCompareProvider implements CryptoCurrencyDataContract
@@ -40,7 +41,7 @@ class CryptoCompareProvider implements CryptoCurrencyDataContract
 
     protected function buildRequest(string $uri, array $data = []) : string
     {
-        if (!starts_with($uri, '/')) {
+        if (!Str::startsWith($uri, '/')) {
             $uri = '/'.$uri;
         }
 
