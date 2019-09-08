@@ -8,65 +8,74 @@ import EditAsset from '../../Helpers/Dialogs/EditAsset';
 import Modal from '../Modal';
 import useModal from '../../Helpers/useModal';
 
-export default () => {
-  const dispatch = useDispatch();
-  
-  const currencyTypes = useSelector(state => state.currencies.types);
-  const selectedAsset = useSelector(state => state.wallet.selectedAsset);
+const Dashboard = () => {
+    const dispatch = useDispatch();
 
-  const [showingAddModal, toggleAddModal] = useModal();
-  const [showingEditModal, toggleEditModal] = useModal();
+    const currencyTypes = useSelector(state => state.currencies.types);
+    const selectedAsset = useSelector(state => state.wallet.selectedAsset);
 
-  const updateWallet = (values, update = false) => {
-    dispatch(updateWalletItem(values, update));
+    const [showingAddModal, toggleAddModal] = useModal();
+    const [showingEditModal, toggleEditModal] = useModal();
 
-    if (update) {
-      toggleEditModal();
-    } else {
-      toggleAddModal();
-    }
-  }
+    const updateWallet = (values, update = false) => {
+        updateWalletItem(values, update);
 
-  const handleEditItem = values => {
-    dispatch(setSelectedAsset(values,));
-    toggleEditModal();
-  }
+        if (update) {
+            toggleEditModal();
+        } else {
+            toggleAddModal();
+        }
+    };
 
-  return (
-    <div>
+    const handleEditItem = values => {
+        dispatch(setSelectedAsset(values));
+        toggleEditModal();
+    };
 
-      <div className="container">
-        <div className="row">
-          <div className="col-sm">
+    return (
+        <div>
+            <div className="container">
+                <div className="row">
+                    <div className="col-sm">
+                        <h1>Cryptoview</h1>
+                        <p>View your cryptocurrency balances</p>
 
-            <h1>Cryptoview</h1>
-            <p>View your cryptocurrency balances</p>
+                        <Wallet
+                            handleAddItem={toggleAddModal}
+                            handleEditItem={handleEditItem}
+                        />
+                    </div>
+                </div>
+            </div>
 
-            <Wallet
-              handleAddItem={toggleAddModal}
-              handleEditItem={handleEditItem}
-            />
+            <Modal
+                isShowing={showingAddModal}
+                hide={toggleAddModal}
+                title="Add a currency to your wallet"
+            >
+                <AddAsset
+                    currencies={currencyTypes}
+                    onSubmit={values => updateWallet(values)}
+                    onCancel={toggleAddModal}
+                />
+            </Modal>
 
-          </div>
+            <Modal
+                isShowing={showingEditModal}
+                hide={toggleEditModal}
+                title="Edit your wallet"
+            >
+                <EditAsset
+                    initialValues={{
+                        amount: selectedAsset.amount,
+                        currency: selectedAsset.currency
+                    }}
+                    onSubmit={values => updateWallet(values, true)}
+                    onCancel={toggleEditModal}
+                />
+            </Modal>
         </div>
-      </div>
+    );
+};
 
-      <Modal isShowing={showingAddModal} hide={toggleAddModal} title="Add a currency to your wallet">
-        <AddAsset
-          currencies={currencyTypes}
-          onSubmit={values => updateWallet(values)}
-          onCancel={toggleAddModal}
-        />
-      </Modal>
-
-      <Modal isShowing={showingEditModal} hide={toggleEditModal} title="Edit your wallet">
-        <EditAsset
-        initialValues={{amount: selectedAsset.amount, currency: selectedAsset.currency}}
-          onSubmit={values => updateWallet(values, true)}
-          onCancel={toggleEditModal}
-        />
-      </Modal>
-      
-    </div>
-  );
-}
+export default Dashboard;

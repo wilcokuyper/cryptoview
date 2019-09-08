@@ -1,25 +1,33 @@
+import PropTypes from 'prop-types';
 import React, { useState, useEffect, useRef } from 'react';
 import './Animated.css';
 
-export default props => {
-  const [containerClass, setContainerClass] = useState('');
+const Animated = ({children, value}) => {
+    const [containerClass, setContainerClass] = useState('');
 
-  const prevCountRef = useRef();
-  useEffect(() => {
-    if (props.value > prevCountRef.current ) {
-      setContainerClass('price-up animated');
-    } else if (props.value < prevCountRef.current) {
-      setContainerClass('price-down animated');
-    } else {
-      setContainerClass('');
-    }
+    const prevCountRef = useRef();
+    useEffect(() => {
+        if (value > prevCountRef.current ) {
+            setContainerClass('price-up animated');
+        } else if (value < prevCountRef.current) {
+            setContainerClass('price-down animated');
+        } else {
+            setContainerClass('');
+        }
 
-    prevCountRef.current = props.value;
-  }, [props.value]);
+        prevCountRef.current = value;
+    }, [value]);
 
-  return (
-    <div className={containerClass}>
-    { props.children }
-    </div>
-  )
-}
+    return (
+        <div className={containerClass}>
+            { children }
+        </div>
+    );
+};
+
+Animated.propTypes = {
+    value: PropTypes.number,
+    children: PropTypes.string
+};
+
+export default Animated;

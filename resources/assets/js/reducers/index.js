@@ -5,8 +5,8 @@ import walletReducer from './walletReducer';
 import { reducer as formReducer } from 'redux-form';
 
 export default combineReducers({
-  auth: authReducer,
-  currencies: currencyReducer,
-  wallet: walletReducer,
-  form: formReducer
+    auth: authReducer,
+    currencies: currencyReducer,
+    wallet: walletReducer,
+    form: formReducer
 });

@@ -8,25 +8,27 @@ import Header from '../Header';
 import Dashboard from '../Dashboard';
 import Login from '../Login';
 
-export default () =>{
-  const dispatch = useDispatch();
+const App = () =>{
+    const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchUser());
-    dispatch(fetchCurrencies());
-    dispatch(fetchWallet());
-    dispatch(fetchPrices());
-  }, []);
+    useEffect(() => {
+        dispatch(fetchUser());
+        dispatch(fetchCurrencies());
+        dispatch(fetchWallet());
+        dispatch(fetchPrices());
+    }, []);
     
-  return (
-    <Router>
-      <div>
-        <Header />
-        <Switch>
-          <Route exact path="/" component={requireAuth(Dashboard)} />
-          <Route path="/login" component={Login} />
-        </Switch>
-      </div>
-    </Router>
-  );
-}
+    return (
+        <Router>
+            <div>
+                <Header />
+                <Switch>
+                    <Route exact path="/" component={requireAuth(Dashboard)} />
+                    <Route path="/login" component={Login} />
+                </Switch>
+            </div>
+        </Router>
+    );
+};
+
+export default App;
