@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Http\Resources\WalletResource;
+use Illuminate\Database\Eloquent\Collection;
 
 class WalletRepository
 {
-    public function getWallet(User $user): WalletResource
+    public function getWallet(User $user): Collection
     {
-        return new WalletResource(WalletItem::where('userid', $user->id)->get());
+        return WalletItem::where('userid', $user->id)->get();
     }
 
     public function getCurrenciesInWallet(User $user)

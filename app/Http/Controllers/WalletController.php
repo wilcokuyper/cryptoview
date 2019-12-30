@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\WalletItem;
 use App\Models\WalletRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -29,7 +28,7 @@ class WalletController extends Controller
      * @param  Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(Request $request): \Illuminate\Http\JsonResponse
+    public function index(Request $request): JsonResponse
     {
         return response()->json($this->walletRepository->getWallet($request->user()));
     }
