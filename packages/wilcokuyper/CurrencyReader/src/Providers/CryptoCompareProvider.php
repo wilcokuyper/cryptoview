@@ -24,10 +24,21 @@ class CryptoCompareProvider implements CryptoCurrencyDataContract
 
     public function getPrices(array $currencies, string $convertTo = null) : array
     {
-        return $this->request('/data/pricemulti', [
+        $prices = $this->request('/data/pricemulti', [
             'fsyms' => implode(',', $currencies),
             'tsyms' => $convertTo ?? config('cryptocompare.default_conversion_currency'),
         ]);
+
+        $list = [];
+        
+        foreach ($prices as $asset => $conversions) {
+            $list[] = [
+                'name' => $asset,
+                'prices' => $conversions,
+            ];
+        }
+
+        return $list;
     }
 
     protected function request(string $path, array $data = []) : array
