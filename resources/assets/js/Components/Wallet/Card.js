@@ -4,7 +4,7 @@ import moment from 'moment';
 import numeral from 'numeral';
 import Animated from './Animated';
 
-const WalletItem = ({ values, price, handleEditItem, handleDeleteItem }) => {
+const Card = ({ values, price, handleEditItem, handleDeleteItem }) => {
 
     const { id, currency, amount, updated_at } = values;
   
@@ -35,11 +35,11 @@ const WalletItem = ({ values, price, handleEditItem, handleDeleteItem }) => {
     );
 };
 
-WalletItem.propTypes = {
+Card.propTypes = {
     values: PropTypes.object,
     price: PropTypes.number,
     handleDeleteItem: PropTypes.func,
     handleEditItem: PropTypes.func
 };
 
-export default WalletItem;
+export default Card;

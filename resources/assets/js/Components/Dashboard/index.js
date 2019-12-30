@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateWalletItem, setSelectedAsset } from '../../actions';
 
@@ -16,9 +16,10 @@ const Dashboard = () => {
 
     const [showingAddModal, toggleAddModal] = useModal();
     const [showingEditModal, toggleEditModal] = useModal();
+    const [isListView, toggleListView] = useState(true);
 
     const updateWallet = (values, update = false) => {
-        updateWalletItem(values, update);
+        dispatch(updateWalletItem(values, update));
 
         if (update) {
             toggleEditModal();
@@ -32,6 +33,9 @@ const Dashboard = () => {
         toggleEditModal();
     };
 
+    const activeBtnClass = 'btn btn-info';
+    const inactiveBtnClass = 'btn btn-light';
+
     return (
         <div>
             <div className="container">
@@ -39,13 +43,33 @@ const Dashboard = () => {
                     <div className="col-sm">
                         <h1>Cryptoview</h1>
                         <p>View your cryptocurrency balances</p>
-
-                        <Wallet
-                            handleAddItem={toggleAddModal}
-                            handleEditItem={handleEditItem}
-                        />
+                    </div>
+                    <div className="col-auto">
+                        
+                        <div className="btn-group" role="group" aria-label="Basic example">
+                            <button
+                                type="button"
+                                className={isListView ? activeBtnClass : inactiveBtnClass}
+                                onClick={() => toggleListView(true)}
+                            >
+                                <i className="fas fa-list"></i>
+                            </button>
+                            <button
+                                type="button"
+                                className={!isListView ? activeBtnClass : inactiveBtnClass}
+                                onClick={() => toggleListView(false)}
+                            >
+                                <i className="fas fa-table"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
+
+                <Wallet
+                    handleAddItem={toggleAddModal}
+                    handleEditItem={handleEditItem}
+                    list={isListView}
+                />
             </div>
 
             <Modal

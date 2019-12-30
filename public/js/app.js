@@ -63056,9 +63056,14 @@ var Dashboard = function Dashboard() {
       showingEditModal = _useModal4[0],
       toggleEditModal = _useModal4[1];
 
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(true),
+      _useState2 = _slicedToArray(_useState, 2),
+      isListView = _useState2[0],
+      toggleListView = _useState2[1];
+
   var updateWallet = function updateWallet(values) {
     var update = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-    Object(_actions__WEBPACK_IMPORTED_MODULE_2__["updateWalletItem"])(values, update);
+    dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_2__["updateWalletItem"])(values, update));
 
     if (update) {
       toggleEditModal();
@@ -63072,16 +63077,41 @@ var Dashboard = function Dashboard() {
     toggleEditModal();
   };
 
+  var activeBtnClass = 'btn btn-info';
+  var inactiveBtnClass = 'btn btn-light';
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "container"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "row"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-sm"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Cryptoview"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "View your cryptocurrency balances"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Wallet__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Cryptoview"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "View your cryptocurrency balances")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-auto"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "btn-group",
+    role: "group",
+    "aria-label": "Basic example"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "button",
+    className: isListView ? activeBtnClass : inactiveBtnClass,
+    onClick: function onClick() {
+      return toggleListView(true);
+    }
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-list"
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "button",
+    className: !isListView ? activeBtnClass : inactiveBtnClass,
+    onClick: function onClick() {
+      return toggleListView(false);
+    }
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-table"
+  }))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Wallet__WEBPACK_IMPORTED_MODULE_3__["default"], {
     handleAddItem: toggleAddModal,
-    handleEditItem: handleEditItem
-  })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Modal__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    handleEditItem: handleEditItem,
+    list: isListView
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Modal__WEBPACK_IMPORTED_MODULE_6__["default"], {
     isShowing: showingAddModal,
     hide: toggleAddModal,
     title: "Add a currency to your wallet"
@@ -63468,10 +63498,10 @@ Animated.propTypes = {
 
 /***/ }),
 
-/***/ "./resources/assets/js/Components/Wallet/WalletItem.js":
-/*!*************************************************************!*\
-  !*** ./resources/assets/js/Components/Wallet/WalletItem.js ***!
-  \*************************************************************/
+/***/ "./resources/assets/js/Components/Wallet/Card.js":
+/*!*******************************************************!*\
+  !*** ./resources/assets/js/Components/Wallet/Card.js ***!
+  \*******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -63492,7 +63522,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var WalletItem = function WalletItem(_ref) {
+var Card = function Card(_ref) {
   var values = _ref.values,
       price = _ref.price,
       handleEditItem = _ref.handleEditItem,
@@ -63546,13 +63576,253 @@ var WalletItem = function WalletItem(_ref) {
   }, numeral__WEBPACK_IMPORTED_MODULE_3___default()(price * amount).format('0,0.00')))));
 };
 
-WalletItem.propTypes = {
+Card.propTypes = {
   values: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.object,
   price: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.number,
   handleDeleteItem: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.func,
   handleEditItem: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.func
 };
-/* harmony default export */ __webpack_exports__["default"] = (WalletItem);
+/* harmony default export */ __webpack_exports__["default"] = (Card);
+
+/***/ }),
+
+/***/ "./resources/assets/js/Components/Wallet/CardView.js":
+/*!***********************************************************!*\
+  !*** ./resources/assets/js/Components/Wallet/CardView.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Card */ "./resources/assets/js/Components/Wallet/Card.js");
+
+
+
+
+var CardView = function CardView(_ref) {
+  var onAddItem = _ref.onAddItem,
+      onDeleteItem = _ref.onDeleteItem,
+      onEditItem = _ref.onEditItem,
+      items = _ref.items,
+      prices = _ref.prices,
+      total = _ref.total;
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "d-flex p-2 mb-2 bg-secondary"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "flex-grow-1"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
+    className: "text-white align-middle"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Total:"), " ", total)), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "btn-group btn-group-sm",
+    role: "group",
+    "aria-label": "wallet actions"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+    className: "btn btn-light ml-auto",
+    onClick: onAddItem
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("i", {
+    className: "fa fa-plus",
+    "aria-hidden": "true"
+  })))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "row"
+  }, items.map(function (item) {
+    var asset = prices.filter(function (price) {
+      return price.name === item.currency;
+    });
+    var price = asset.length > 0 ? asset[0].prices.EUR : 0;
+    return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Card__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      key: item.id,
+      values: item,
+      price: price,
+      handleEditItem: onEditItem,
+      handleDeleteItem: onDeleteItem
+    });
+  })));
+};
+
+CardView.propTypes = {
+  onAddItem: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.func,
+  onDeleteItem: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.func,
+  onEditItem: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.func,
+  items: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.array,
+  prices: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.array,
+  total: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.string
+};
+/* harmony default export */ __webpack_exports__["default"] = (CardView);
+
+/***/ }),
+
+/***/ "./resources/assets/js/Components/Wallet/List.js":
+/*!*******************************************************!*\
+  !*** ./resources/assets/js/Components/Wallet/List.js ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var numeral__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! numeral */ "./node_modules/numeral/numeral.js");
+/* harmony import */ var numeral__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(numeral__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _Animated__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Animated */ "./resources/assets/js/Components/Wallet/Animated.js");
+
+
+
+
+
+
+var List = function List(_ref) {
+  var values = _ref.values,
+      price = _ref.price,
+      handleEditItem = _ref.handleEditItem,
+      handleDeleteItem = _ref.handleDeleteItem;
+  var id = values.id,
+      currency = values.currency,
+      amount = values.amount,
+      updated_at = values.updated_at;
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, currency), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", {
+    className: "text-right"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Animated__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    value: price
+  }, numeral__WEBPACK_IMPORTED_MODULE_3___default()(price).format('0,0.00'))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", {
+    className: "text-right"
+  }, numeral__WEBPACK_IMPORTED_MODULE_3___default()(amount).format('0,0.0000')), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", {
+    className: "text-right"
+  }, numeral__WEBPACK_IMPORTED_MODULE_3___default()(price * amount).format('0,0.00')), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", {
+    className: "text-right"
+  }, moment__WEBPACK_IMPORTED_MODULE_2___default()(updated_at).format('D-M-Y')), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", {
+    className: "text-right"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "btn-group btn-group-sm",
+    role: "group",
+    "aria-label": "Edit currency {currency}"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-light",
+    onClick: function onClick() {
+      return handleEditItem(values);
+    }
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("i", {
+    className: "fa fa-edit",
+    "aria-hidden": "true"
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-light",
+    onClick: function onClick() {
+      return handleDeleteItem(id);
+    }
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("i", {
+    className: "fa fa-trash",
+    "aria-hidden": "true"
+  })))));
+};
+
+List.propTypes = {
+  values: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.object,
+  price: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.number,
+  handleDeleteItem: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.func,
+  handleEditItem: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.func
+};
+/* harmony default export */ __webpack_exports__["default"] = (List);
+
+/***/ }),
+
+/***/ "./resources/assets/js/Components/Wallet/ListView.js":
+/*!***********************************************************!*\
+  !*** ./resources/assets/js/Components/Wallet/ListView.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _List__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./List */ "./resources/assets/js/Components/Wallet/List.js");
+
+
+
+
+var ListView = function ListView(_ref) {
+  var onAddItem = _ref.onAddItem,
+      onDeleteItem = _ref.onDeleteItem,
+      onEditItem = _ref.onEditItem,
+      items = _ref.items,
+      prices = _ref.prices,
+      total = _ref.total;
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "mb-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+    className: "btn btn-primary ml-auto",
+    onClick: onAddItem
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("i", {
+    className: "fa fa-plus",
+    "aria-hidden": "true"
+  }), " Add")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("table", {
+    className: "table table-responsive-md table-hover"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", {
+    scope: "col",
+    width: "50"
+  }, "Currency"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", {
+    scope: "col",
+    width: "150",
+    className: "text-right"
+  }, "Avg. Price"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", {
+    scope: "col",
+    width: "150",
+    className: "text-right"
+  }, "Amount"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", {
+    scope: "col",
+    width: "150",
+    className: "text-right"
+  }, "Total"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", {
+    scope: "col",
+    width: "200",
+    className: "text-right"
+  }, "Last update"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", {
+    scope: "col",
+    className: "text-right",
+    width: "50"
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tfoot", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, "Total:"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", {
+    colSpan: "3",
+    className: "text-right"
+  }, total), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", {
+    colSpan: "2"
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tbody", null, items.map(function (item) {
+    var asset = prices.filter(function (price) {
+      return price.name === item.currency;
+    });
+    var price = asset.length > 0 ? asset[0].prices.EUR : 0;
+    return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_List__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      key: item.id,
+      values: item,
+      price: price,
+      handleEditItem: onEditItem,
+      handleDeleteItem: onDeleteItem
+    });
+  }))));
+};
+
+ListView.propTypes = {
+  onAddItem: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.func,
+  onDeleteItem: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.func,
+  onEditItem: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.func,
+  items: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.array,
+  prices: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.array,
+  total: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.string
+};
+/* harmony default export */ __webpack_exports__["default"] = (ListView);
 
 /***/ }),
 
@@ -63570,10 +63840,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _WalletItem__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./WalletItem */ "./resources/assets/js/Components/Wallet/WalletItem.js");
-/* harmony import */ var numeral__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! numeral */ "./node_modules/numeral/numeral.js");
-/* harmony import */ var numeral__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(numeral__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions */ "./resources/assets/js/actions/index.js");
+/* harmony import */ var numeral__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! numeral */ "./node_modules/numeral/numeral.js");
+/* harmony import */ var numeral__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(numeral__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions */ "./resources/assets/js/actions/index.js");
+/* harmony import */ var _CardView__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./CardView */ "./resources/assets/js/Components/Wallet/CardView.js");
+/* harmony import */ var _ListView__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ListView */ "./resources/assets/js/Components/Wallet/ListView.js");
+
 
 
 
@@ -63583,66 +63855,59 @@ __webpack_require__.r(__webpack_exports__);
 
 var Wallet = function Wallet(_ref) {
   var handleAddItem = _ref.handleAddItem,
-      handleEditItem = _ref.handleEditItem;
+      handleEditItem = _ref.handleEditItem,
+      list = _ref.list;
   var prices = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["useSelector"])(function (state) {
     return state.currencies.prices;
   });
   var items = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["useSelector"])(function (state) {
     return state.wallet.assets;
   });
+  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["useDispatch"])();
 
   var deleteItem = function deleteItem(id) {
-    return Object(_actions__WEBPACK_IMPORTED_MODULE_5__["deleteWalletItem"])(id);
+    return dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_4__["deleteWalletItem"])(id));
   };
 
-  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["useDispatch"])();
+  var handeDeleteItem = function handeDeleteItem(id) {
+    return deleteItem(id);
+  };
+
   Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
     var interval = setInterval(function () {
-      return dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_5__["fetchPrices"])());
+      return dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_4__["fetchPrices"])());
     }, 10000);
     return function () {
       return clearInterval(interval);
     };
   }, []);
   var totalValue = items.reduce(function (sum, item) {
-    var price = prices[item.currency] && prices[item.currency].EUR;
-    return sum += item.amount * price;
-  }, 0);
-  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-    className: "d-flex p-2 mb-2 bg-secondary"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-    className: "flex-grow-1"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
-    className: "text-white align-middle"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Total:"), " ", numeral__WEBPACK_IMPORTED_MODULE_4___default()(totalValue).format('0,0.00'))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-    className: "btn-group btn-group-sm",
-    role: "group",
-    "aria-label": "wallet actions"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
-    className: "btn btn-light ml-auto",
-    onClick: handleAddItem
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("i", {
-    className: "fa fa-plus",
-    "aria-hidden": "true"
-  })))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-    className: "row"
-  }, items.map(function (i) {
-    var price = prices[i.currency] && prices[i.currency].EUR;
-    return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_WalletItem__WEBPACK_IMPORTED_MODULE_3__["default"], {
-      key: i.id,
-      values: i,
-      price: price,
-      handleEditItem: handleEditItem,
-      handleDeleteItem: function handleDeleteItem(id) {
-        return dispatch(deleteItem(id));
-      }
+    var asset = prices.filter(function (price) {
+      return price.name === item.currency;
     });
-  })));
+    return asset.length !== 0 ? sum += item.amount * asset[0].prices.EUR : 0;
+  }, 0);
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, list ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_ListView__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    items: items,
+    prices: prices,
+    total: numeral__WEBPACK_IMPORTED_MODULE_3___default()(totalValue).format('0,0.00'),
+    onAddItem: handleAddItem,
+    onDeleteItem: handeDeleteItem,
+    onEditItem: handleEditItem
+  }) : react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_CardView__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    items: items,
+    prices: prices,
+    total: numeral__WEBPACK_IMPORTED_MODULE_3___default()(totalValue).format('0,0.00'),
+    onAddItem: handleAddItem,
+    onDeleteItem: handeDeleteItem,
+    onEditItem: handleEditItem
+  }));
 };
 
 Wallet.propTypes = {
   handleAddItem: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.func,
-  handleEditItem: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.func
+  handleEditItem: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.func,
+  list: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.bool
 };
 /* harmony default export */ __webpack_exports__["default"] = (Wallet);
 
