@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use wilcokuyper\CurrencyReader\CurrencyReader;
 use App\Models\WalletRepository;
+use Illuminate\Support\Facades\Cache;
 
 class CurrencyController extends Controller
 {
@@ -17,7 +18,11 @@ class CurrencyController extends Controller
 
     public function getCurrencyList(CurrencyReader $reader, $default = false)
     {
-        return response()->json($reader->getCoinList($default));
+        $currency_list = Cache::remember('currency_list', 10, function () use ($reader, $default) {
+            return $reader->getCoinList($default);
+        });
+
+        return response()->json($currency_list);
     }
 
     public function getPriceList(Request $request, CurrencyReader $reader, $default = true)
