@@ -50,6 +50,10 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "post-install-cmd": [
+            "echo \"$OAUTH_PUBLIC_KEY\" > storage/oauth-public.key",
+            "echo \"$OAUTH_PRIVATE_KEY\" > storage/oauth-private.key"
         ]
     },
     "config": {
