@@ -40,12 +40,11 @@ const Dashboard = () => {
         <div>
             <div className="container">
                 <div className="row">
-                    <div className="col-sm">
+                    <div className="col">
                         <h1>Cryptoview</h1>
                         <p>View your cryptocurrency balances</p>
                     </div>
-                    <div className="col-auto">
-                        
+                    <div className="col-auto mb-2">
                         <div className="btn-group" role="group" aria-label="Basic example">
                             <button
                                 type="button"

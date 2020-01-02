@@ -11,10 +11,13 @@ class CryptoCompareProvider implements CryptoCurrencyDataContract
 
     protected $api_key;
 
+    protected $defaultCurrency;
+
     public function __construct(string $endpoint, string $api_key)
     {
         $this->endpoint = $endpoint;
         $this->api_key = $api_key;
+        $this->defaultCurrency = config('cryptocompare.default_conversion_currency');
     }
 
     public function getSymbols() : array
@@ -26,7 +29,7 @@ class CryptoCompareProvider implements CryptoCurrencyDataContract
     {
         $prices = $this->request('/data/pricemulti', [
             'fsyms' => implode(',', $currencies),
-            'tsyms' => $convertTo ?? config('cryptocompare.default_conversion_currency'),
+            'tsyms' => $convertTo ?? $this->defaultCurrency,
         ]);
 
         $list = [];
@@ -41,10 +44,22 @@ class CryptoCompareProvider implements CryptoCurrencyDataContract
         return $list;
     }
 
+    public function getHistoricalData($currency, $convertTo = null, $aggregate = 1, $limit = 10): array
+    {
+        $historyicalData = $this->request('/data/v2/histominute', [
+            'fsym' => $currency,
+            'tsym' => $convertTo ?? $this->defaultCurrency,
+            'aggregate' => $aggregate,
+            'limit' => $limit,
+        ]);
+
+        return isset($historyicalData['Data']['Data']) ? $historyicalData['Data']['Data'] : null;
+    }
+
     protected function request(string $path, array $data = []) : array
     {
         $url = $this->buildRequest($path, $data);
-
+        
         $json = file_get_contents($url);
 
         return json_decode($json, true);

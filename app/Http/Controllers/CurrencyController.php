@@ -25,12 +25,21 @@ class CurrencyController extends Controller
         return response()->json($currency_list);
     }
 
-    public function getPriceList(Request $request, CurrencyReader $reader, $default = true)
+    public function getPriceList(Request $request, CurrencyReader $reader)
     {
         $userCurrencies = array_map(function ($i) {
             return $i['currency'];
         }, $this->walletRepository->getCurrenciesInWallet($request->user())->toArray());
 
         return response()->json($reader->getPriceList($userCurrencies));
+    }
+
+    public function getHistory(Request $request, CurrencyReader $reader)
+    {
+        if ($currency = $request->get('currency')) {
+            return $reader->getHistoricalData($currency);
+        }
+
+        return [];
     }
 }

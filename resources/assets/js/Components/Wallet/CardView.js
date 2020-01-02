@@ -3,7 +3,6 @@ import React from 'react';
 import Card from './Card';
 
 const CardView = ({ onAddItem, onDeleteItem, onEditItem, items, prices, total }) => {
-
     return (
         <React.Fragment>
             <div className="d-flex p-2 mb-2 bg-secondary">

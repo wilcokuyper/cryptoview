@@ -2,7 +2,7 @@ import { FETCH_WALLET, UPDATE_WALLET, SET_SELECTED_ASSET } from '../actions/type
 
 const initialState = {
     assets: [],
-    selectedAsset: {}
+    selectedAsset: {},
 };
 
 const walletReducer = (state = initialState, action) => {

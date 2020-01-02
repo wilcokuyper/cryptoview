@@ -1,13 +1,32 @@
+import axios from 'axios';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import numeral from 'numeral';
 import Animated from './Animated';
+import { Sparklines, SparklinesLine, SparklinesSpots } from 'react-sparklines';
+import './Card.scss';
 
 const Card = ({ values, price, handleEditItem, handleDeleteItem }) => {
 
+    const [ historicalData, setHistoricalData ] = useState([]);
+    const [ historicalDataLoading, setHistoricalDataLoading ] = useState(true);
     const { id, currency, amount, updated_at } = values;
-  
+
+    useEffect(() => {
+        async function getHistoricalData(currency) {
+            const res = await axios.get(`api/history?currency=${currency}`);
+            setHistoricalData(res.data);
+            setHistoricalDataLoading(false);
+        }
+
+        getHistoricalData(currency);
+
+        const interval = setInterval(() => getHistoricalData(currency), 60000);
+
+        return () => clearInterval(interval);
+    }, [currency]);
+
     return (
         <div className="col-12 col-md-6 col-lg-4">
             <div className="card mb-2 p-2">
@@ -20,15 +39,36 @@ const Card = ({ values, price, handleEditItem, handleDeleteItem }) => {
                         </div>
                     </div>
                 </div>
-                <h5 className="text-right">
-                    <Animated value={price}>
-                        {numeral(price).format('0,0.00')}
-                    </Animated>
-                </h5>
-                <div className="text-right">{numeral(amount).format('0,0.0000')}</div>
+                <div className="d-flex">
+                    <div className="flex-grow-1 asset-graph">
+                        { historicalDataLoading
+                            ? <div className="asset-graph-loading">
+                                <div/>
+                                <div/>
+                                <div/>
+                                <div/>
+                            </div>
+                            : <Sparklines data={historicalData} margin={20}>
+                                <SparklinesLine style={{ strokeWidth: 2, stroke: '#336aff', fill: 'none' }} />
+                                <SparklinesSpots
+                                    size={3}
+                                    style={{ stroke: '#336aff', strokeWidth: 2, fill: 'white' }}
+                                />
+                            </Sparklines>
+                        }
+                    </div>
+                    <div className="asset-data">
+                        <h5 className="text-right">
+                            <Animated value={price}>
+                                <strong>{numeral(price).format('0,0.00')}</strong>
+                            </Animated>
+                        </h5>
+                        <div className="text-right">{numeral(amount).format('0,0.0000')}</div>
+                    </div>
+                </div>
                 <div className="d-flex justify-content-between">
                     <div className="text-left">{moment(updated_at).format('D-M-Y')}</div>
-                    <div className="text-right">{numeral(price * amount).format('0,0.00')}</div>
+                    <div className="text-right"><i>{numeral(price * amount).format('0,0.00')}</i></div>
                 </div>
             </div>
         </div>

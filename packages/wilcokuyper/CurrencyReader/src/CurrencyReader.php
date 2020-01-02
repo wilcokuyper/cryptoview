@@ -65,4 +65,15 @@ class CurrencyReader implements CurrencyReaderContract
 
         return $this->currencyList;
     }
+
+    public function getHistoricalData($currency)
+    {
+        if ($data = $this->provider->getHistoricalData($currency)) {
+            return array_map(function ($dataPoint) {
+                return $dataPoint['close'];
+            }, $data);
+        }
+
+        return null;
+    }
 }
