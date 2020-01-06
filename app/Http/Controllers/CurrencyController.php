@@ -36,8 +36,10 @@ class CurrencyController extends Controller
 
     public function getHistory(Request $request, CurrencyReader $reader)
     {
-        if ($currency = $request->get('currency')) {
-            return $reader->getHistoricalData($currency);
+        $currency = $request->get('currency');
+        if ($currency) {
+            $count = $request->get('count', 10);
+            return $reader->getHistoricalData($currency, $count);
         }
 
         return [];

@@ -44,7 +44,7 @@ class CryptoCompareProvider implements CryptoCurrencyDataContract
         return $list;
     }
 
-    public function getHistoricalData($currency, $convertTo = null, $aggregate = 1, $limit = 10): array
+    public function getHistoricalData(string $currency, $limit = 10, $aggregate = 1, string $converTo = null): array
     {
         $historyicalData = $this->request('/data/v2/histominute', [
             'fsym' => $currency,

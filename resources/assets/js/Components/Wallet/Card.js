@@ -15,7 +15,7 @@ const Card = ({ values, price, handleEditItem, handleDeleteItem }) => {
 
     useEffect(() => {
         async function getHistoricalData(currency) {
-            const res = await axios.get(`api/history?currency=${currency}`);
+            const res = await axios.get(`api/history?currency=${currency}&count=30`);
             setHistoricalData(res.data);
             setHistoricalDataLoading(false);
         }
@@ -49,7 +49,9 @@ const Card = ({ values, price, handleEditItem, handleDeleteItem }) => {
                                 <div/>
                             </div>
                             : <Sparklines data={historicalData} margin={20}>
-                                <SparklinesLine style={{ strokeWidth: 2, stroke: '#336aff', fill: 'none' }} />
+                                <SparklinesLine
+                                    style={{ strokeWidth: 2, stroke: '#336aff', fill: 'none' }}
+                                />
                                 <SparklinesSpots
                                     size={3}
                                     style={{ stroke: '#336aff', strokeWidth: 2, fill: 'white' }}
