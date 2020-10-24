@@ -13,10 +13,10 @@ class CryptoCompareProvider implements CryptoCurrencyDataContract
 
     protected $defaultCurrency;
 
-    public function __construct(string $endpoint, string $api_key)
+    public function __construct()
     {
-        $this->endpoint = $endpoint;
-        $this->api_key = $api_key;
+        $this->endpoint = config('cryptocompare.endpoint');
+        $this->api_key = config('cryptocompare.key');
         $this->defaultCurrency = config('cryptocompare.default_conversion_currency');
     }
 
