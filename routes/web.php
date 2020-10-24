@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,9 +15,9 @@
 |
 */
 
-Route::get('login/{provider}', 'Auth\LoginController@login');
-Route::get('login/{provider}/callback', 'Auth\LoginController@login');
-Route::get('logout', 'Auth\LoginController@logout');
+Route::get('login/{provider}', [LoginController::class,@'login']);
+Route::get('login/{provider}/callback', [LoginController::class, 'login']);
+Route::get('logout', [LoginController::class,'logout']);
 
 Route::view('/{path?}', 'index')
       ->where('path', '.*')

@@ -1,7 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\WalletController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,12 +17,12 @@ use Illuminate\Http\Response;
 */
 
 Route::middleware(['auth:api'])->group(function () {
-    Route::get('/user', 'Auth\LoginController@getUser');
+    Route::get('/user', [LoginController::class, 'getUser']);
 
-    Route::get('/currencies', 'CurrencyController@getCurrencyList');
-    Route::get('/prices', 'CurrencyController@getPriceList');
+    Route::get('/currencies', [CurrencyController::class, 'getCurrencyList']);
+    Route::get('/prices', [CurrencyController::class, 'getPriceList']);
 
-    Route::get('/history', 'CurrencyController@getHistory');
+    Route::get('/history', [CurrencyController::class, 'getHistory']);
 
-    Route::apiResource('wallet', 'WalletController');
+    Route::apiResource('wallet', WalletController::class);
 });
