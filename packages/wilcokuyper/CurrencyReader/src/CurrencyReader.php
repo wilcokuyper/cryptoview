@@ -16,7 +16,11 @@ class CurrencyReader implements CurrencyReaderContract
         $this->provider = $provider;
     }
 
-    public function getSymbols($default = true)
+    /**
+     * @param bool $default
+     * @return array
+     */
+    public function getSymbols($default = true): array
     {
         $currencies = [];
 
@@ -31,6 +35,10 @@ class CurrencyReader implements CurrencyReaderContract
         return $currencies;
     }
 
+    /**
+     * @param bool $default
+     * @return array
+     */
     public function getCoinList($default = true) : array
     {
         $currency_list = [];
@@ -50,6 +58,11 @@ class CurrencyReader implements CurrencyReaderContract
         return $currency_list;
     }
 
+    /**
+     * @param null $requestedCurrencies
+     * @param bool $default
+     * @return array
+     */
     public function getPriceList($requestedCurrencies = null, $default = true) : array
     {
         $currencies = $requestedCurrencies ?? $this->GetSymbols($default);
@@ -57,7 +70,10 @@ class CurrencyReader implements CurrencyReaderContract
         return $this->provider->getPrices($currencies);
     }
 
-    protected function getCurrencyList()
+    /**
+     * @return array
+     */
+    protected function getCurrencyList(): array
     {
         if (!isset($this->currencyList)) {
             $this->currencyList = $this->provider->getSymbols();
@@ -66,7 +82,12 @@ class CurrencyReader implements CurrencyReaderContract
         return $this->currencyList;
     }
 
-    public function getHistoricalData($currency, $count = 10)
+    /**
+     * @param $currency
+     * @param int $count
+     * @return array|null
+     */
+    public function getHistoricalData($currency, $count = 10): ?array
     {
         if ($data = $this->provider->getHistoricalData($currency, $count)) {
             return array_map(function ($dataPoint) {

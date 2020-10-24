@@ -20,11 +20,19 @@ class CryptoCompareProvider implements CryptoCurrencyDataContract
         $this->defaultCurrency = config('cryptocompare.default_conversion_currency');
     }
 
+    /**
+     * @return array
+     */
     public function getSymbols() : array
     {
         return $this->request('/data/all/coinlist');
     }
 
+    /**
+     * @param array $currencies
+     * @param string|null $convertTo
+     * @return array
+     */
     public function getPrices(array $currencies, string $convertTo = null) : array
     {
         $prices = $this->request('/data/pricemulti', [
@@ -44,7 +52,14 @@ class CryptoCompareProvider implements CryptoCurrencyDataContract
         return $list;
     }
 
-    public function getHistoricalData(string $currency, $limit = 10, $aggregate = 1, string $converTo = null): array
+    /**
+     * @param string $currency
+     * @param int $limit
+     * @param int $aggregate
+     * @param string|null $convertTo
+     * @return array
+     */
+    public function getHistoricalData(string $currency, $limit = 10, $aggregate = 1, string $convertTo = null): array
     {
         $historyicalData = $this->request('/data/v2/histominute', [
             'fsym' => $currency,
@@ -53,9 +68,14 @@ class CryptoCompareProvider implements CryptoCurrencyDataContract
             'limit' => $limit,
         ]);
 
-        return isset($historyicalData['Data']['Data']) ? $historyicalData['Data']['Data'] : null;
+        return $historyicalData['Data']['Data'] ?? [];
     }
 
+    /**
+     * @param string $path
+     * @param array $data
+     * @return array
+     */
     protected function request(string $path, array $data = []) : array
     {
         $url = $this->buildRequest($path, $data);
@@ -65,6 +85,11 @@ class CryptoCompareProvider implements CryptoCurrencyDataContract
         return json_decode($json, true);
     }
 
+    /**
+     * @param string $uri
+     * @param array $data
+     * @return string
+     */
     protected function buildRequest(string $uri, array $data = []) : string
     {
         if (!Str::startsWith($uri, '/')) {
