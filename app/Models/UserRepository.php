@@ -10,7 +10,7 @@ class UserRepository
      */
     public function findByEmailOrCreate($user)
     {
-        return User::firstOrCreate([
+        return User::query()->updateOrCreate([
             'email' => $user->email,
         ])->fill([
             'name' => $user->name,

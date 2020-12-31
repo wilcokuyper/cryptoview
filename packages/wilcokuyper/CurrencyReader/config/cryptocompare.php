@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'endpoint' => 'https://min-api.cryptocompare.com',
-    'key' => ENV('CRYPTOCOMPARE_API_KEY'),
-    'default_conversion_currency' => 'EUR',
+    'endpoint' => env('CRYPTOCOMPARE_ENDPOINT', 'https://min-api.cryptocompare.com'),
+    'key' => ENV('CRYPTOCOMPARE_APIKEY', ''),
+    'default_conversion_currency' => env('CRYPTOCOMPARE_DEFAULT_CURRENCY', 'EUR'),
     'conversion_currencies' => [
         'EUR',
         'USD',

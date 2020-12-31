@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use wilcokuyper\CurrencyReader\CurrencyReader;
 use App\Models\WalletRepository;
@@ -9,14 +10,14 @@ use Illuminate\Support\Facades\Cache;
 
 class CurrencyController extends Controller
 {
-    protected $walletRepository;
+    protected WalletRepository $walletRepository;
 
     public function __construct(WalletRepository $walletRepository)
     {
         $this->walletRepository = $walletRepository;
     }
 
-    public function getCurrencyList(CurrencyReader $reader, $default = false)
+    public function getCurrencyList(CurrencyReader $reader, bool $default = false)
     {
         $currency_list = Cache::remember('currency_list', 10, function () use ($reader, $default) {
             return $reader->getCoinList($default);
@@ -25,7 +26,7 @@ class CurrencyController extends Controller
         return response()->json($currency_list);
     }
 
-    public function getPriceList(Request $request, CurrencyReader $reader)
+    public function getPriceList(Request $request, CurrencyReader $reader): JsonResponse
     {
         $userCurrencies = array_map(function ($i) {
             return $i['currency'];
@@ -34,7 +35,7 @@ class CurrencyController extends Controller
         return response()->json($reader->getPriceList($userCurrencies));
     }
 
-    public function getHistory(Request $request, CurrencyReader $reader)
+    public function getHistory(Request $request, CurrencyReader $reader): ?array
     {
         $currency = $request->get('currency');
         if ($currency) {

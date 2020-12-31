@@ -13,7 +13,7 @@ class CurrencyReaderServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->publishes([
             __DIR__ . '/../config/cryptocompare.php' => config_path('cryptocompare.php'),
@@ -25,18 +25,18 @@ class CurrencyReaderServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom(
             __DIR__ . '/../config/cryptocompare.php',
             'cryptocompare'
         );
 
-        $this->app->singleton(CryptoCurrencyDataContract::class, function ($app) {
+        $this->app->singleton(CryptoCurrencyDataContract::class, function () {
             return new CryptoCompareProvider();
         });
 
-        $this->app->singleton(CurrencyReader::class, function ($app) {
+        $this->app->singleton(CurrencyReader::class, function () {
             $provider = app(CryptoCurrencyDataContract::class);
 
             return new CurrencyReader($provider);

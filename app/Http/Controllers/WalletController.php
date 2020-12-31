@@ -5,11 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\WalletRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class WalletController extends Controller
 {
-    protected $walletRepository;
+    protected WalletRepository $walletRepository;
 
     /**
      * WalletController constructor.
@@ -26,7 +25,7 @@ class WalletController extends Controller
      * Display a listing of the resource.
      *
      * @param  Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -36,8 +35,8 @@ class WalletController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return Response
+     * @param Request $request
+     * @return JsonResponse
      */
     public function store(Request $request): JsonResponse
     {

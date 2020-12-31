@@ -2,26 +2,25 @@
 
 namespace App\Models;
 
-use App\Http\Resources\WalletResource;
 use Illuminate\Database\Eloquent\Collection;
 
 class WalletRepository
 {
     public function getWallet(User $user): Collection
     {
-        return WalletItem::where('userid', $user->id)->get();
+        return WalletItem::query()->where('userid', $user->id)->get();
     }
 
     public function getCurrenciesInWallet(User $user)
     {
-        return WalletItem::select('currency')->where([
+        return WalletItem::query()->select('currency')->where([
             ['userid', $user->id],
         ])->distinct()->get();
     }
 
     public function getItemByCurrency(User $user, $currency)
     {
-        return WalletItem::where([
+        return WalletItem::query()->where([
             ['userid', $user->id],
             ['currency', $currency],
         ])->first();
@@ -34,22 +33,20 @@ class WalletRepository
             $item = new WalletItem();
             $item->userid = $user->id;
             $item->currency = $currency;
-            $item->amount = floatval($amount);
+            $item->amount = (float)$amount;
+        } elseif ($update) {
+            $item->amount = $amount;
         } else {
-            if ($update) {
-                $item->amount = $amount;
-            } else {
-                $item->amount += $amount;
-            }
+            $item->amount += $amount;
         }
         $item->save();
 
         return $item;
     }
 
-    public function deleteItem(User $user, $id)
+    public function deleteItem(User $user, $id): void
     {
-        WalletItem::where([
+        WalletItem::query()->where([
             ['userid', $user->id],
             ['id', $id],
         ])->delete();

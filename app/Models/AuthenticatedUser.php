@@ -52,6 +52,10 @@ class AuthenticatedUser
      */
     protected function getUser($provider)
     {
+        if ($provider === 'twitter') {
+            return null;
+        }
+
         return Socialite::driver($provider)->stateless()->user();
     }
 }
