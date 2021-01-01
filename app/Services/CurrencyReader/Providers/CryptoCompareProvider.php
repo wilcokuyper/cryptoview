@@ -17,7 +17,7 @@ class CryptoCompareProvider implements CryptoCurrencyDataContract
     public function __construct()
     {
         $this->endpoint = config('cryptocompare.endpoint');
-        $this->api_key = config('cryptocompare.apikey');
+        $this->api_key = config('cryptocompare.key');
         $this->defaultCurrency = config('cryptocompare.default_conversion_currency');
     }
 
