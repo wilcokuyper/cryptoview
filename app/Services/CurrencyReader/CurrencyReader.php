@@ -55,6 +55,8 @@ class CurrencyReader implements CurrencyReaderContract
             ];
         }
 
+        usort($currency_list, static fn($a, $b) => $a['name'] > $b['name']);
+
         return $currency_list;
     }
 
