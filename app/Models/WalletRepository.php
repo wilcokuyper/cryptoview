@@ -30,10 +30,11 @@ class WalletRepository
     {
         $item = $this->getItemByCurrency($user, $currency);
         if (null === $item) {
-            $item = new WalletItem();
-            $item->userid = $user->id;
-            $item->currency = $currency;
-            $item->amount = (float)$amount;
+            $item = new WalletItem([
+                'userid' => $user->id,
+                'currency' => $currency,
+                'amount' => (float)$amount,
+            ]);
         } elseif ($update) {
             $item->amount = $amount;
         } else {

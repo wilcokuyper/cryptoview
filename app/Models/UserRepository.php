@@ -6,9 +6,9 @@ class UserRepository
 {
     /**
      * @param  $user
-     * @return mixed
+     * @return User
      */
-    public function findByEmailOrCreate($user)
+    public function findByEmailOrCreate($user): User
     {
         return User::query()->updateOrCreate([
             'email' => $user->email,

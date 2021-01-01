@@ -8,5 +8,13 @@ class WalletItem extends Model
 {
     protected $table = 'wallet_items';
 
-    protected $hidden = ['userid'];
+    protected $hidden = [
+        'userid'
+    ];
+
+    protected $fillable = [
+        'userid',
+        'currency',
+        'amount',
+    ];
 }

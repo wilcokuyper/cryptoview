@@ -17,20 +17,25 @@ class CurrencyController extends Controller
         $this->walletRepository = $walletRepository;
     }
 
-    public function getCurrencyList(CurrencyReader $reader, bool $default = false)
+    public function getCurrencyList(CurrencyReader $reader, bool $default = false): JsonResponse
     {
-        $currency_list = Cache::remember('currency_list', 10, function () use ($reader, $default) {
-            return $reader->getCoinList($default);
-        });
+        $currency_list = Cache::remember(
+            'currency_list',
+            10,
+            function () use ($reader, $default) {
+                return $reader->getCoinList($default);
+            }
+        );
 
         return response()->json($currency_list);
     }
 
     public function getPriceList(Request $request, CurrencyReader $reader): JsonResponse
     {
-        $userCurrencies = array_map(function ($i) {
-            return $i['currency'];
-        }, $this->walletRepository->getCurrenciesInWallet($request->user())->toArray());
+        $userCurrencies = array_map(
+            static fn($currency) => $currency['currency'],
+            $this->walletRepository->getCurrenciesInWallet($request->user())->toArray()
+        );
 
         return response()->json($reader->getPriceList($userCurrencies));
     }
@@ -38,11 +43,11 @@ class CurrencyController extends Controller
     public function getHistory(Request $request, CurrencyReader $reader): ?array
     {
         $currency = $request->get('currency');
-        if ($currency) {
-            $count = $request->get('count', 10);
-            return $reader->getHistoricalData($currency, $count);
+        if (!$currency) {
+            return [];
         }
 
-        return [];
+        $count = $request->get('count', 10);
+        return $reader->getHistoricalData($currency, $count);
     }
 }

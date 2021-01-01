@@ -6,7 +6,7 @@ use Laravel\Socialite\Facades\Socialite;
 
 class AuthenticatedUser
 {
-    protected $users;
+    protected UserRepository $users;
 
     /**
      * AuthenticatedUser constructor.

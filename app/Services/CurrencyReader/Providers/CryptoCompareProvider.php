@@ -23,6 +23,7 @@ class CryptoCompareProvider implements CryptoCurrencyDataContract
 
     /**
      * @return array
+     * @throws JsonException
      */
     public function getSymbols(): array
     {
@@ -33,6 +34,7 @@ class CryptoCompareProvider implements CryptoCurrencyDataContract
      * @param array $currencies
      * @param string|null $convertTo
      * @return array
+     * @throws JsonException
      */
     public function getPrices(array $currencies, string $convertTo = null): array
     {
@@ -58,6 +60,7 @@ class CryptoCompareProvider implements CryptoCurrencyDataContract
      * @param int $aggregate
      * @param string|null $convertTo
      * @return array
+     * @throws JsonException
      */
     public function getHistoricalData(
         string $currency,
@@ -65,14 +68,14 @@ class CryptoCompareProvider implements CryptoCurrencyDataContract
         int $aggregate = 1,
         string $convertTo = null
     ): array {
-        $historyicalData = $this->request('/data/v2/histominute', [
+        $historicalData = $this->request('/data/v2/histominute', [
             'fsym' => $currency,
             'tsym' => $convertTo ?? $this->defaultCurrency,
             'aggregate' => $aggregate,
             'limit' => $limit,
         ]);
 
-        return $historyicalData['Data']['Data'] ?? [];
+        return $historicalData['Data']['Data'] ?? [];
     }
 
     /**
