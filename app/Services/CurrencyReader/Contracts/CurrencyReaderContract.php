@@ -1,6 +1,6 @@
 <?php
 
-namespace wilcokuyper\CurrencyReader\Contracts;
+namespace App\Services\CurrencyReader\Contracts;
 
 interface CurrencyReaderContract
 {

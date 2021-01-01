@@ -1,10 +1,10 @@
 <?php
 
-namespace wilcokuyper\CurrencyReader\Providers;
+namespace App\Services\CurrencyReader\Providers;
 
 use Illuminate\Support\Str;
 use JsonException;
-use wilcokuyper\CurrencyReader\Contracts\CryptoCurrencyDataContract;
+use App\Services\CurrencyReader\Contracts\CryptoCurrencyDataContract;
 
 class CryptoCompareProvider implements CryptoCurrencyDataContract
 {

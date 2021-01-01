@@ -31,8 +31,7 @@
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/",
-            "wilcokuyper\\CurrencyReader\\": "packages/wilcokuyper/CurrencyReader/src"
+            "Database\\Seeders\\": "database/seeders/"
         }
     },
     "autoload-dev": {

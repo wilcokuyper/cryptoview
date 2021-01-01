@@ -1,9 +1,9 @@
 <?php
 
-namespace wilcokuyper\CurrencyReader;
+namespace App\Services\CurrencyReader;
 
-use wilcokuyper\CurrencyReader\Contracts\CryptoCurrencyDataContract;
-use wilcokuyper\CurrencyReader\Contracts\CurrencyReaderContract;
+use App\Services\CurrencyReader\Contracts\CryptoCurrencyDataContract;
+use App\Services\CurrencyReader\Contracts\CurrencyReaderContract;
 
 class CurrencyReader implements CurrencyReaderContract
 {

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use wilcokuyper\CurrencyReader\CurrencyReader;
+use App\Services\CurrencyReader\CurrencyReader;
 use App\Models\WalletRepository;
 use Illuminate\Support\Facades\Cache;
 
