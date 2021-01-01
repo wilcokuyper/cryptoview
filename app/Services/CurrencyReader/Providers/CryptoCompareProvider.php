@@ -2,6 +2,7 @@
 
 namespace App\Services\CurrencyReader\Providers;
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use JsonException;
 use App\Services\CurrencyReader\Contracts\CryptoCurrencyDataContract;
@@ -88,7 +89,7 @@ class CryptoCompareProvider implements CryptoCurrencyDataContract
     {
         $url = $this->buildRequest($path, $data);
 
-        $json = file_get_contents($url);
+        $json = Http::get($url);
 
         return json_decode($json, true, 512, JSON_THROW_ON_ERROR);
     }
