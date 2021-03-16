@@ -21,11 +21,21 @@
         "barryvdh/laravel-debugbar": "^3.2",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
-        "laravel/sail": "^0.0.5",
+        "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.3.3",
         "roave/security-advisories": "dev-master"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
     },
     "autoload": {
         "psr-4": {
@@ -56,15 +66,5 @@
             "echo \"$OAUTH_PUBLIC_KEY\" > storage/oauth-public.key",
             "echo \"$OAUTH_PRIVATE_KEY\" > storage/oauth-private.key"
         ]
-    },
-    "config": {
-        "optimize-autoloader": true,
-        "preferred-install": "dist",
-        "sort-packages": true
-    },
-    "extra": {
-        "laravel": {
-            "dont-discover": []
-        }
     }
 }
