@@ -22,9 +22,7 @@ class CurrencyController extends Controller
         $currency_list = Cache::remember(
             'currency_list',
             10,
-            function () use ($reader, $default) {
-                return $reader->getCoinList($default);
-            }
+            fn () => $reader->getCoinList($default)
         );
 
         return response()->json($currency_list);
@@ -33,7 +31,7 @@ class CurrencyController extends Controller
     public function getPriceList(Request $request, CurrencyReader $reader): JsonResponse
     {
         $userCurrencies = array_map(
-            static fn($currency) => $currency['currency'],
+            static fn ($currency) => $currency['currency'],
             $this->walletRepository->getCurrenciesInWallet($request->user())->toArray()
         );
 

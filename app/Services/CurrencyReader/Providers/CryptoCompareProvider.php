@@ -68,7 +68,8 @@ class CryptoCompareProvider implements CryptoCurrencyDataContract
         int $limit = 10,
         int $aggregate = 1,
         string $convertTo = null
-    ): array {
+    ): array
+    {
         $historicalData = $this->request('/data/v2/histominute', [
             'fsym' => $currency,
             'tsym' => $convertTo ?? $this->defaultCurrency,

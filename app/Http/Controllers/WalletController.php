@@ -17,14 +17,13 @@ class WalletController extends Controller
      */
     public function __construct(WalletRepository $walletRepository)
     {
-        $this->middleware('auth');
         $this->walletRepository = $walletRepository;
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @param  Request $request
+     * @param Request $request
      * @return JsonResponse
      */
     public function index(Request $request): JsonResponse
@@ -55,7 +54,7 @@ class WalletController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Request $request
+     * @param Request $request
      * @param  $id
      * @return JsonResponse
      */

@@ -55,7 +55,7 @@ class CurrencyReader implements CurrencyReaderContract
             ];
         }
 
-        usort($currency_list, static fn($a, $b) => $a['name'] > $b['name']);
+        usort($currency_list, static fn ($a, $b) => ($a['name'] > $b['name']) ? -1 : 1);
 
         return $currency_list;
     }
@@ -92,9 +92,10 @@ class CurrencyReader implements CurrencyReaderContract
     public function getHistoricalData(string $currency, int $count = 10): ?array
     {
         if ($data = $this->provider->getHistoricalData($currency, $count)) {
-            return array_map(function ($dataPoint) {
-                return $dataPoint['close'];
-            }, $data);
+            return array_map(
+                static fn ($dataPoint) => $dataPoint['close'],
+                $data
+            );
         }
 
         return null;
