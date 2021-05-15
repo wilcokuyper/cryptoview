@@ -1,4 +1,4 @@
-let mix = require('laravel-mix');
+const mix = require('laravel-mix');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,23 +11,34 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.react('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css')
-   .extract([
-      'axios',
-      'bootstrap',
-      'jquery',
-      'moment',
-      'numeral',
-      'react',
-      'react-redux',
-      'react-router',
-      'react-router-dom',
-      'redux',
-      'redux-form',
-      'redux-thunk'
-   ]);
+mix.js('resources/assets/js/app.js', 'public/js').react()
+    .postCss('resources/assets/css/app.css', 'public/css')
+    .options({
+        postCss: [
+            require('postcss-import'),
+            require('tailwindcss')
+        ],
+    })
+    .extract([
+        'axios',
+        'moment',
+        'numeral',
+        'react',
+        'react-redux',
+        'react-router',
+        'react-router-dom',
+        'redux',
+        'redux-form',
+        'redux-thunk'
+    ]);
+
+mix.webpackConfig({
+    devServer: {
+        host: "0.0.0.0",
+        port: 8080,
+    },
+});
 
 if (mix.inProduction()) {
-   mix.version();
+    mix.version();
 }
