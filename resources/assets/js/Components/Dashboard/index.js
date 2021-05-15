@@ -7,6 +7,7 @@ import AddAsset from '../../Helpers/Dialogs/AddAsset';
 import EditAsset from '../../Helpers/Dialogs/EditAsset';
 import Modal from '../Modal';
 import useModal from '../../Helpers/useModal';
+import {ViewListIcon, TableIcon} from "@heroicons/react/solid";
 
 const Dashboard = () => {
     const dispatch = useDispatch();
@@ -37,30 +38,24 @@ const Dashboard = () => {
     const inactiveBtnClass = 'btn btn-light';
 
     return (
-        <div>
-            <div className="container">
-                <div className="row">
-                    <div className="col">
-                        <h1>Cryptoview</h1>
+        <>
+            <div className="container mx-auto">
+                <div className="flex mb-3">
+                    <div className="flex-grow">
+                        <h1 className="text-3xl">Cryptoview</h1>
                         <p>View your cryptocurrency balances</p>
                     </div>
-                    <div className="col-auto mb-2">
-                        <div className="btn-group" role="group" aria-label="Basic example">
-                            <button
-                                type="button"
-                                className={isListView ? activeBtnClass : inactiveBtnClass}
-                                onClick={() => toggleListView(true)}
-                            >
-                                <i className="fas fa-list"></i>
-                            </button>
-                            <button
-                                type="button"
-                                className={!isListView ? activeBtnClass : inactiveBtnClass}
-                                onClick={() => toggleListView(false)}
-                            >
-                                <i className="fas fa-table"></i>
-                            </button>
-                        </div>
+                    <div className="flex-grow-0">
+                        <button
+                            type="button"
+                            className={`${isListView ? "bg-blue-400 hover:bg-blue-500 text-white" : "text-black bg-white hover:bg-gray-200"} px-3 py-2 rounded-l-lg transition`}
+                            onClick={() => toggleListView(true)}
+                        ><ViewListIcon className="h-5" /></button>
+                        <button
+                            type="button"
+                            className={`${isListView ? "text-black bg-white hover:bg-gray-200" : "bg-blue-400 hover:bg-blue-500 text-white"} px-3 py-2 rounded-r-lg transition`}
+                            onClick={() => toggleListView(false)}
+                        ><TableIcon className="h-5" /></button>
                     </div>
                 </div>
 
@@ -97,7 +92,7 @@ const Dashboard = () => {
                     onCancel={toggleEditModal}
                 />
             </Modal>
-        </div>
+        </>
     );
 };
 

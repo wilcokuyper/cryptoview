@@ -1,31 +1,33 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import List from './List';
+import {PlusIcon} from "@heroicons/react/solid";
 
 const ListView = ({ onAddItem, onDeleteItem, onEditItem, items, prices, total }) => {
     return (
         <React.Fragment>
             <div className="mb-3">
-                <button className="btn btn-primary ml-auto" onClick={onAddItem}>
-                    <i className="fa fa-plus" aria-hidden="true"></i> Add
-                </button>
+                <button
+                    className="bg-blue-400 hover:bg-blue-500 transition text-white text-sm rounded mr-auto flex items-center px-3 py-2"
+                    onClick={onAddItem}
+                ><PlusIcon className="h-5" /> Add</button>
             </div>
-            <table className="table table-responsive-md table-hover">
+            <table className="table table-fixed w-full">
                 <thead>
-                    <tr>
-                        <th scope="col" width="50">Currency</th>
-                        <th scope="col" width="150" className="text-right">Avg. Price</th>
-                        <th scope="col" width="150" className="text-right">Amount</th>
-                        <th scope="col" width="150" className="text-right">Total</th>
-                        <th scope="col" width="200" className="text-right">Last update</th>
-                        <th scope="col" className="text-right" width="50"></th>
+                    <tr className="border-t border-b-2 border-gray-100">
+                        <th scope="col" className="w-1/12 text-left p-2">Currency</th>
+                        <th scope="col" className="w-2/12 text-right p-2">Amount</th>
+                        <th scope="col" className="w-3/12 text-right p-2">Avg. Price</th>
+                        <th scope="col" className="w-3/12 text-right p-2">Total</th>
+                        <th scope="col" className="w-2/12 text-right p-2">Last update</th>
+                        <th scope="col" className="w-1/12 text-right p-2">&nbsp;</th>
                     </tr>
                 </thead>
                 <tfoot>
-                    <tr>
-                        <td>Total:</td>
-                        <td colSpan="3"className="text-right">{total}</td>
-                        <td colSpan="2"></td>
+                    <tr className="border-b border-gray-100">
+                        <td className="p-2">Total:</td>
+                        <td colSpan="3" className="text-right p-2">{total}</td>
+                        <td colSpan="2" className="p-2">&nbsp;</td>
                     </tr>
                 </tfoot>
                 <tbody>

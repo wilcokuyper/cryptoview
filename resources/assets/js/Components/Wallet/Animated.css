@@ -7,7 +7,7 @@
     color: #00ff00;
   }
   100% {
-    color:none;
+    color:initial;
   }
 }
 
@@ -16,7 +16,7 @@
     color: #ff0000;
   }
   100% {
-    color: none;
+    color: initial;
   }
 }
 
@@ -24,22 +24,6 @@
   animation-name: price-up;
 }
 
-.price-up:after {
-  content: '\f35b';
-  font-family: "Font Awesome 5 Free";
-  color: green;
-  display: inline-block;
-  margin-left: 5px;
-}
-
 .price-down {
   animation-name: price-down;
-}
-
-.price-down:after {
-  content: '\f358';
-  font-family: "Font Awesome 5 Free";
-  color: red;
-  display: inline-block;
-  margin-left: 5px;
 }
