@@ -18,7 +18,7 @@ class CurrencyReader implements CurrencyReaderContract
 
     /**
      * @param bool $default
-     * @return array
+     * @return array<int, string>
      */
     public function getSymbols(bool $default = true): array
     {
@@ -37,7 +37,7 @@ class CurrencyReader implements CurrencyReaderContract
 
     /**
      * @param bool $default
-     * @return array
+     * @return array<int, array<string, string>>
      */
     public function getCoinList(bool $default = true): array
     {
@@ -63,7 +63,7 @@ class CurrencyReader implements CurrencyReaderContract
     /**
      * @param array|null $requestedCurrencies
      * @param bool $default
-     * @return array
+     * @return array<
      */
     public function getPriceList(array $requestedCurrencies = null, bool $default = true): array
     {

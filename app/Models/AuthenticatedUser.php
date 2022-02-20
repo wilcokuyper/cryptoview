@@ -19,12 +19,12 @@ class AuthenticatedUser
     }
 
     /**
-     * @param  $provider
-     * @param  $hasCode
-     * @param  $listener
+     * @param string $provider
+     * @param bool $hasCode
+     * @param HandlesAuthentication $handler
      * @return mixed
      */
-    public function execute($provider, $hasCode, $listener)
+    public function execute(string $provider, bool $hasCode, HandlesAuthentication $handler)
     {
         if (!$hasCode) {
             return $this->getAuth($provider);
@@ -32,16 +32,12 @@ class AuthenticatedUser
 
         $user = $this->users->findByEmailOrCreate($this->getUser($provider));
 
-        auth()->login($user, true);
+        \Auth::login($user, true);
 
-        return $listener->userHasLoggedIn($user);
+        return $handler->userHasLoggedIn($user);
     }
 
-    /**
-     * @param  $provider
-     * @return mixed
-     */
-    protected function getAuth($provider)
+    protected function getAuth(string $provider): \Illuminate\Http\RedirectResponse
     {
         return Socialite::driver($provider)->redirect();
     }
@@ -52,10 +48,6 @@ class AuthenticatedUser
      */
     protected function getUser($provider)
     {
-        if ($provider === 'twitter') {
-            return null;
-        }
-
         return Socialite::driver($provider)->stateless()->user();
     }
 }
