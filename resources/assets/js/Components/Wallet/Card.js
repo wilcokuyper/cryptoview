@@ -5,7 +5,8 @@ import moment from 'moment';
 import numeral from 'numeral';
 import Animated from './Animated';
 import { Sparklines, SparklinesLine, SparklinesSpots } from 'react-sparklines';
-import './Card.scss';
+import './Card.css';
+import {PencilIcon, TrashIcon} from "@heroicons/react/solid";
 
 const Card = ({ values, price, handleEditItem, handleDeleteItem }) => {
 
@@ -34,8 +35,12 @@ const Card = ({ values, price, handleEditItem, handleDeleteItem }) => {
                     <h3 className="flex-grow-1">{currency}</h3>
                     <div>
                         <div className="btn-group btn-group-sm" role="group" aria-label="Edit currency {currency}">
-                            <button type="button" className="btn btn-light" onClick={() => handleEditItem(values)}><i className="fa fa-edit" aria-hidden="true" /></button>
-                            <button type="button" className="btn btn-light" onClick={() => handleDeleteItem(id)}><i className="fa fa-trash" aria-hidden="true" /></button>
+                            <button type="button" className="btn btn-light" onClick={() => handleEditItem(values)}>
+                                <PencilIcon className="h-5" />
+                            </button>
+                            <button type="button" className="btn btn-light" onClick={() => handleDeleteItem(id)}>
+                                <TrashIcon className="h-5" />
+                            </button>
                         </div>
                     </div>
                 </div>
