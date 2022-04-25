@@ -11,23 +11,24 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.react('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css')
-   .extract([
-      'axios',
-      'bootstrap',
-      'jquery',
-      'moment',
-      'numeral',
-      'react',
-      'react-redux',
-      'react-router',
-      'react-router-dom',
-      'redux',
-      'redux-form',
-      'redux-thunk'
-   ]);
+mix.js('resources/assets/js/app.js', 'public/js')
+    .react()
+    .sass('resources/assets/sass/app.scss', 'public/css')
+    .extract([
+        'axios',
+        'bootstrap',
+        'jquery',
+        'moment',
+        'numeral',
+        'react',
+        'react-redux',
+        'react-router',
+        'react-router-dom',
+        'redux',
+        'redux-form',
+        'redux-thunk',
+    ]);
 
 if (mix.inProduction()) {
-   mix.version();
+    mix.version();
 }
