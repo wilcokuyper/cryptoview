@@ -4,6 +4,7 @@ namespace App\Services\CurrencyReader;
 
 use App\Services\CurrencyReader\Contracts\CryptoCurrencyDataContract;
 use App\Services\CurrencyReader\Contracts\CurrencyReaderContract;
+use Illuminate\Support\Collection;
 
 class CurrencyReader implements CurrencyReaderContract
 {
@@ -37,27 +38,25 @@ class CurrencyReader implements CurrencyReaderContract
 
     /**
      * @param bool $default
-     * @return array<int, array<string, string>>
+     * @return Collection<array<string, string>>
      */
-    public function getCoinList(bool $default = true): array
+    public function getCoinList(bool $default = true): Collection
     {
-        $currency_list = [];
+        $currency_list = collect();
 
         foreach ($this->getCurrencyList()['Data'] as $currency) {
             if ($default && !in_array($currency['Symbol'], $this->getSymbols($default), true)) {
                 continue;
             }
 
-            $currency_list[] = [
+            $currency_list->push([
                 'id' => $currency['Id'],
                 'name' => $currency['FullName'],
                 'symbol' => $currency['Symbol'],
-            ];
+            ]);
         }
 
-        usort($currency_list, static fn ($a, $b) => ($a['name'] > $b['name']) ? -1 : 1);
-
-        return $currency_list;
+        return $currency_list->sort(static fn($a, $b) => ($a['name'] > $b['name']) ? -1 : 1);
     }
 
     /**

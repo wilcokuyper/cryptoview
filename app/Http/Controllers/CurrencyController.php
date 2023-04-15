@@ -6,6 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Services\CurrencyReader\CurrencyReader;
 use App\Models\WalletRepository;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
 class CurrencyController extends Controller
@@ -17,21 +18,28 @@ class CurrencyController extends Controller
         $this->walletRepository = $walletRepository;
     }
 
-    public function getCurrencyList(CurrencyReader $reader, bool $default = false): JsonResponse
+    public function getCurrencyList(Request $request, CurrencyReader $reader, bool $default = false): JsonResponse
     {
+        /** @var Collection $currency_list */
         $currency_list = Cache::remember(
             'currency_list',
             10,
-            fn () => $reader->getCoinList($default)
+            static fn() => $reader->getCoinList($default)
         );
 
-        return response()->json($currency_list);
+        if ($request->has('q')) {
+            $currency_list = $currency_list->filter(
+                static fn($currency) => \Str::startsWith($currency['symbol'], $request->get('q')) || \Str::startsWith($currency['name'], $request->get('q'))
+            );
+        }
+
+        return response()->json($currency_list->take(50)->values());
     }
 
     public function getPriceList(Request $request, CurrencyReader $reader): JsonResponse
     {
         $userCurrencies = array_map(
-            static fn ($currency) => $currency['currency'],
+            static fn($currency) => $currency['currency'],
             $this->walletRepository->getCurrenciesInWallet($request->user())->toArray()
         );
 
