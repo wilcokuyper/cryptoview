@@ -1,0 +1,46 @@
+import axios from 'axios'
+import {
+  LOGIN_REQUEST,
+  FETCH_USER,
+  FETCH_WALLET,
+  UPDATE_WALLET,
+  FETCH_PRICES,
+  SET_SELECTED_ASSET,
+} from './types'
+
+export const fetchUser = () => async (dispatch) => {
+  dispatch({ type: LOGIN_REQUEST })
+  let res = null
+  try {
+    res = await axios.get('/api/user')
+  } catch (e) {
+    res = { data: null }
+  }
+  dispatch({ type: FETCH_USER, payload: res.data })
+}
+
+export const fetchWallet = () => async (dispatch) => {
+  const res = await axios.get('/api/wallet')
+  dispatch({ type: FETCH_WALLET, payload: res.data })
+}
+
+export const updateWalletItem =
+  (values, update = false) =>
+  async (dispatch) => {
+    const res = await axios.post('/api/wallet', { ...values, update })
+    dispatch({ type: UPDATE_WALLET, payload: res.data })
+  }
+
+export const deleteWalletItem = (id) => async (dispatch) => {
+  const res = await axios.delete(`/api/wallet/${id}`)
+  dispatch({ type: UPDATE_WALLET, payload: res.data })
+}
+
+export const fetchPrices = () => async (dispatch) => {
+  const res = await axios.get('/api/prices')
+  dispatch({ type: FETCH_PRICES, payload: res.data })
+}
+
+export const setSelectedAsset = (asset) => (dispatch) => {
+  dispatch({ type: SET_SELECTED_ASSET, payload: asset })
+}

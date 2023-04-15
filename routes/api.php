@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:api'])->group(function () {
     Route::get('/user', [LoginController::class, 'getUser']);
 
-    Route::get('/currencies', [CurrencyController::class, 'getCurrencyList']);
+    Route::post('/currencies', [CurrencyController::class, 'getCurrencyList']);
     Route::get('/prices', [CurrencyController::class, 'getPriceList']);
 
     Route::get('/history', [CurrencyController::class, 'getHistory']);
