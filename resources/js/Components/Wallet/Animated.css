@@ -24,20 +24,6 @@
     animation-name: price-up;
 }
 
-.price-up:after {
-    content: '\f35b';
-    color: green;
-    display: inline-block;
-    margin-left: 5px;
-}
-
 .price-down {
     animation-name: price-down;
-}
-
-.price-down:after {
-    content: '\f358';
-    color: red;
-    display: inline-block;
-    margin-left: 5px;
 }
