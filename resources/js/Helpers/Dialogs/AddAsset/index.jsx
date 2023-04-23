@@ -1,23 +1,26 @@
 import axios from 'axios'
 import PropTypes from 'prop-types'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 function AddAsset({ onSubmit, onCancel }) {
   const [currencies, setCurrencies] = useState([])
   const [selectedCurrency, setSelectedCurrency] = useState('')
   const [amount, setAmount] = useState('')
+  const shouldLoad = useRef(true)
 
   useEffect(() => {
     const controller = new AbortController()
     const load = async () => {
-      const res = await axios.post(
-        '/api/currencies',
-        {
-          q: selectedCurrency,
-        },
-        { signal: controller.signal },
-      )
-      setCurrencies(res.data)
+      if (shouldLoad.current) {
+        const res = await axios.post(
+          '/api/currencies',
+          {
+            q: selectedCurrency,
+          },
+          { signal: controller.signal },
+        )
+        setCurrencies(res.data)
+      }
     }
 
     load()
@@ -26,11 +29,13 @@ function AddAsset({ onSubmit, onCancel }) {
   }, [selectedCurrency])
 
   const handleChange = async (e) => {
+    shouldLoad.current = true
     setSelectedCurrency(e.target.value)
   }
 
   const handleSelect = (e) => {
     e.preventDefault()
+    shouldLoad.current = false
     setSelectedCurrency(e.target.dataset.currency || '')
     setCurrencies([])
   }
@@ -43,8 +48,8 @@ function AddAsset({ onSubmit, onCancel }) {
   const renderCurrencies = () =>
     currencies.length > 0 && (
       <div
-        className="position-absolute w-100 mh-100 overflow-auto bg-white px-2 border rounded"
-        style={{ zIndex: 1 }}
+        className="position-absolute w-100 overflow-auto bg-white px-2 border rounded"
+        style={{ zIndex: 1, maxHeight: 'calc(5*31px)' }}
       >
         {currencies.map((currency) => (
           <a
