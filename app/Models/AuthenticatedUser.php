@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Http\RedirectResponse;
 use Laravel\Socialite\Facades\Socialite;
 
 class AuthenticatedUser
@@ -22,9 +23,8 @@ class AuthenticatedUser
      * @param string $provider
      * @param bool $hasCode
      * @param HandlesAuthentication $handler
-     * @return mixed
      */
-    public function execute(string $provider, bool $hasCode, HandlesAuthentication $handler)
+    public function execute(string $provider, bool $hasCode, HandlesAuthentication $handler): RedirectResponse
     {
         if (!$hasCode) {
             return $this->getAuth($provider);
@@ -32,7 +32,8 @@ class AuthenticatedUser
 
         $user = $this->users->findByEmailOrCreate($this->getUser($provider));
 
-        \Auth::login($user, true);
+
+        auth()->login($user, true);
 
         return $handler->userHasLoggedIn($user);
     }
