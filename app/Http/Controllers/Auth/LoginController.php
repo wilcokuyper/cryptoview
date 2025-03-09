@@ -23,7 +23,7 @@ class LoginController extends Controller implements HandlesAuthentication
      * @param Authenticatable|null $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function userHasLoggedIn(Authenticatable $user = null)
+    public function userHasLoggedIn(Authenticatable $user = null): \Illuminate\Http\RedirectResponse
     {
         if ($user) {
             return redirect('/');

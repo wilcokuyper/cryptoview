@@ -6,7 +6,7 @@ interface CryptoCurrencyDataContract
 {
     public function getSymbols(): array;
 
-    public function getPrices(array $currencies, string $convertTo = null): array;
+    public function getPrices(array $currencies, ?string $convertTo = null): array;
 
     public function getHistoricalData(
         string $currency,

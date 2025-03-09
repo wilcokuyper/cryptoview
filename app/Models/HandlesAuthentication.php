@@ -6,5 +6,5 @@ use Illuminate\Contracts\Auth\Authenticatable;
 
 interface HandlesAuthentication
 {
-    public function userHasLoggedIn(Authenticatable $user);
+    public function userHasLoggedIn(Authenticatable $user): \Illuminate\Http\RedirectResponse;
 }

@@ -65,7 +65,7 @@ class CurrencyReader implements CurrencyReaderContract
      * @param bool $default
      * @return array<
      */
-    public function getPriceList(array $requestedCurrencies = null, bool $default = true): array
+    public function getPriceList(?array $requestedCurrencies = null, bool $default = true): array
     {
         $currencies = $requestedCurrencies ?? $this->getSymbols($default);
 
