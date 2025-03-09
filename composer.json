@@ -12,6 +12,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.0",
         "laravel/tinker": "^2.10.1",
+        "predis/predis": "^2.3",
         "socialiteproviders/facebook": "^4.1"
     },
     "require-dev": {
