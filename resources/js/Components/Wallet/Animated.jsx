@@ -1,26 +1,38 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect, useRef } from 'react';
 import './Animated.css';
+import {FaChevronDown, FaChevronUp} from "react-icons/fa";
 
 const Animated = ({children, value}) => {
-    const [containerClass, setContainerClass] = useState('');
+    const [trend, setTrend] = useState(0);
+
+    let containerClass = '';
+    let Icon = null;
+    if (trend > 0) {
+        containerClass = 'price-up';
+        Icon = FaChevronUp;
+    } else if (trend < 0) {
+        containerClass = 'price-down';
+        Icon = FaChevronDown;
+    }
 
     const prevCountRef = useRef();
     useEffect(() => {
         if (value > prevCountRef.current ) {
-            setContainerClass('price-up animated');
+            setTrend(1);
         } else if (value < prevCountRef.current) {
-            setContainerClass('price-down animated');
+            setTrend(-1);
         } else {
-            setContainerClass('');
+            setTrend(0);
         }
 
         prevCountRef.current = value;
     }, [value]);
 
     return (
-        <div className={containerClass}>
+        <div className={`animated ${containerClass} d-flex align-items-center justify-content-end`}>
             { children }
+            {Icon !== null && <Icon aria-hidden="true" className="ml-1" />}
         </div>
     );
 };

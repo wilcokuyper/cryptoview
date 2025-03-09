@@ -6,6 +6,7 @@ import numeral from 'numeral';
 import Animated from './Animated';
 import { Sparklines, SparklinesLine, SparklinesSpots } from 'react-sparklines';
 import './Card.scss';
+import {FaEdit, FaTrash} from "react-icons/fa";
 
 const Card = ({ values, price, handleEditItem, handleDeleteItem }) => {
 
@@ -34,8 +35,8 @@ const Card = ({ values, price, handleEditItem, handleDeleteItem }) => {
                     <h3 className="flex-grow-1">{currency}</h3>
                     <div>
                         <div className="btn-group btn-group-sm" role="group" aria-label="Edit currency {currency}">
-                            <button type="button" className="btn btn-light" onClick={() => handleEditItem(values)}><i className="fa fa-edit" aria-hidden="true" /></button>
-                            <button type="button" className="btn btn-light" onClick={() => handleDeleteItem(id)}><i className="fa fa-trash" aria-hidden="true" /></button>
+                            <button type="button" className="btn btn-light" onClick={() => handleEditItem(values)}><FaEdit aria-hidden="true"/></button>
+                            <button type="button" className="btn btn-light" onClick={() => handleDeleteItem(id)}><FaTrash aria-hidden="true" /></button>
                         </div>
                     </div>
                 </div>

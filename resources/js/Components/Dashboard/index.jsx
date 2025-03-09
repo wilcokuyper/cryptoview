@@ -7,6 +7,7 @@ import AddAsset from '../../Helpers/Dialogs/AddAsset';
 import EditAsset from '../../Helpers/Dialogs/EditAsset';
 import Modal from '../Modal';
 import useModal from '../../Helpers/useModal';
+import {FaList, FaTable} from "react-icons/fa";
 
 const Dashboard = () => {
     const dispatch = useDispatch();
@@ -51,14 +52,14 @@ const Dashboard = () => {
                                 className={isListView ? activeBtnClass : inactiveBtnClass}
                                 onClick={() => toggleListView(true)}
                             >
-                                <i className="fas fa-list"></i>
+                                <FaList />
                             </button>
                             <button
                                 type="button"
                                 className={!isListView ? activeBtnClass : inactiveBtnClass}
                                 onClick={() => toggleListView(false)}
                             >
-                                <i className="fas fa-table"></i>
+                                <FaTable />
                             </button>
                         </div>
                     </div>

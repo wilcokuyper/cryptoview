@@ -3,11 +3,12 @@ import React from 'react';
 import moment from 'moment';
 import numeral from 'numeral';
 import Animated from './Animated';
+import {FaEdit, FaTrash} from "react-icons/fa";
 
 const List = ({ values, price, handleEditItem, handleDeleteItem }) => {
 
     const { id, currency, amount, updated_at } = values;
-  
+
     return (
         <tr>
             <td>{currency}</td>
@@ -26,18 +27,18 @@ const List = ({ values, price, handleEditItem, handleDeleteItem }) => {
                         className="btn btn-light"
                         onClick={() => handleEditItem(values)}
                     >
-                        <i className="fa fa-edit" aria-hidden="true" />
+                        <FaEdit aria-hidden="true" />
                     </button>
                     <button
                         type="button"
                         className="btn btn-light"
                         onClick={() => handleDeleteItem(id)}
                     >
-                        <i className="fa fa-trash" aria-hidden="true" />
+                        <FaTrash aria-hidden="true" />
                     </button>
                 </div>
             </td>
-        </tr>    
+        </tr>
     );
 };
 

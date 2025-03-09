@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import List from './List';
+import {FaPlus} from "react-icons/fa";
 
 const ListView = ({ onAddItem, onDeleteItem, onEditItem, items, prices, total }) => {
     return (
         <React.Fragment>
             <div className="mb-3">
                 <button className="btn btn-primary ml-auto" onClick={onAddItem}>
-                    <i className="fa fa-plus" aria-hidden="true"></i> Add
+                    <FaPlus aria-hidden="true" /> Add
                 </button>
             </div>
             <table className="table table-responsive-md table-hover">
