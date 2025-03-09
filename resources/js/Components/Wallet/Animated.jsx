@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import './Animated.css';
 import {FaChevronDown, FaChevronUp} from "react-icons/fa";
 
@@ -18,7 +18,7 @@ const Animated = ({children, value}) => {
 
     const prevCountRef = useRef();
     useEffect(() => {
-        if (value > prevCountRef.current ) {
+        if (value > prevCountRef.current) {
             setTrend(1);
         } else if (value < prevCountRef.current) {
             setTrend(-1);
@@ -31,15 +31,18 @@ const Animated = ({children, value}) => {
 
     return (
         <div className={`animated ${containerClass} d-flex align-items-center justify-content-end`}>
-            { children }
-            {Icon !== null && <Icon aria-hidden="true" className="ml-1" />}
+            {children}
+            {Icon !== null && <Icon aria-hidden="true" className="ml-1"/>}
         </div>
     );
 };
 
 Animated.propTypes = {
     value: PropTypes.number,
-    children: PropTypes.string
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node
+    ]),
 };
 
 export default Animated;
