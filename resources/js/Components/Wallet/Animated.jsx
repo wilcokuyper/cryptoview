@@ -1,18 +1,17 @@
 import PropTypes from 'prop-types';
-import React, {useState, useEffect, useRef} from 'react';
-import './Animated.css';
-import {FaChevronDown, FaChevronUp} from "react-icons/fa";
+import { useState, useEffect, useRef } from 'react';
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 const Animated = ({children, value}) => {
     const [trend, setTrend] = useState(0);
 
-    let containerClass = '';
+    let animationClass = '';
     let Icon = null;
     if (trend > 0) {
-        containerClass = 'price-up';
+        animationClass = 'animate-price-up';
         Icon = FaChevronUp;
     } else if (trend < 0) {
-        containerClass = 'price-down';
+        animationClass = 'animate-price-down';
         Icon = FaChevronDown;
     }
 
@@ -30,7 +29,7 @@ const Animated = ({children, value}) => {
     }, [value]);
 
     return (
-        <div className={`animated ${containerClass} d-flex align-items-center justify-content-end`}>
+        <div className={`flex items-center justify-end ${animationClass}`}>
             {children}
             {Icon !== null && <Icon aria-hidden="true" className="ml-1"/>}
         </div>

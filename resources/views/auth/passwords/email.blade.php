@@ -1,42 +1,37 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Reset Password</div>
+<div class="max-w-7xl mx-auto px-4">
+    <div class="flex justify-center">
+        <div class="w-full md:w-2/3 lg:w-1/2">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div class="px-4 py-3 bg-gray-50 border-b border-gray-200 rounded-t-lg font-semibold">
+                    Reset Password
+                </div>
 
-                <div class="panel-body">
+                <div class="p-6">
                     @if (session('status'))
-                        <div class="alert alert-success">
+                        <div class="p-4 mb-4 bg-green-100 border border-brand-green text-brand-green rounded-md">
                             {{ session('status') }}
                         </div>
                     @endif
 
-                    <form class="form-horizontal" method="POST" action="{{ route('password.email') }}">
+                    <form method="POST" action="{{ route('password.email') }}">
                         {{ csrf_field() }}
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-Mail Address</label>
+                            <input id="email" type="email" name="email" value="{{ old('email') }}" required
+                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-blue focus:ring focus:ring-brand-blue focus:ring-opacity-50 @if($errors->has('email')) border-brand-red @endif">
+                            @if ($errors->has('email'))
+                                <p class="mt-1 text-sm text-brand-red">{{ $errors->first('email') }}</p>
+                            @endif
                         </div>
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Send Password Reset Link
-                                </button>
-                            </div>
+                        <div>
+                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-brand-blue text-white font-medium rounded-md hover:bg-brand-blue/90">
+                                Send Password Reset Link
+                            </button>
                         </div>
                     </form>
                 </div>

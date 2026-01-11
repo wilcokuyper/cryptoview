@@ -1,50 +1,67 @@
 import PropTypes from 'prop-types';
-import React from 'react';
 import List from './List';
-import {FaPlus} from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 
 const ListView = ({ onAddItem, onDeleteItem, onEditItem, items, prices, total }) => {
     return (
-        <React.Fragment>
+        <>
             <div className="mb-3">
-                <button className="btn btn-primary ml-auto" onClick={onAddItem}>
-                    <FaPlus aria-hidden="true" /> Add
+                <button
+                    className="inline-flex items-center px-4 py-2 bg-brand-blue text-white font-medium rounded-md hover:bg-brand-blue/90"
+                    onClick={onAddItem}
+                >
+                    <FaPlus aria-hidden="true" className="mr-1" /> Add
                 </button>
             </div>
-            <table className="table table-responsive-md table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col" width="50">Currency</th>
-                        <th scope="col" width="150" className="text-right">Avg. Price</th>
-                        <th scope="col" width="150" className="text-right">Amount</th>
-                        <th scope="col" width="150" className="text-right">Total</th>
-                        <th scope="col" width="200" className="text-right">Last update</th>
-                        <th scope="col" className="text-right" width="50"></th>
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr>
-                        <td>Total:</td>
-                        <td colSpan="3"className="text-right">{total}</td>
-                        <td colSpan="2"></td>
-                    </tr>
-                </tfoot>
-                <tbody>
-                    { items.map( item => {
-                        const asset =  prices.filter(price => price.name === item.currency);
-                        const price = asset.length > 0 ? asset[0].prices.EUR : 0;
-                        return <List
-                            key={item.id}
-                            values={item}
-                            price={price}
-                            handleEditItem={onEditItem}
-                            handleDeleteItem={onDeleteItem}
-                        />;
-                    })
-                    }
-                </tbody>
-            </table>
-        </React.Fragment>
+            <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200 bg-white shadow rounded-lg">
+                    <thead className="bg-gray-50">
+                        <tr>
+                            <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-12">
+                                Currency
+                            </th>
+                            <th scope="col" className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider w-36">
+                                Avg. Price
+                            </th>
+                            <th scope="col" className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider w-36">
+                                Amount
+                            </th>
+                            <th scope="col" className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider w-36">
+                                Total
+                            </th>
+                            <th scope="col" className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider w-48">
+                                Last update
+                            </th>
+                            <th scope="col" className="px-4 py-3 text-right w-12">
+                                <span className="sr-only">Actions</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tfoot className="bg-gray-50">
+                        <tr>
+                            <td className="px-4 py-3 font-medium">Total:</td>
+                            <td colSpan="3" className="px-4 py-3 text-right font-semibold">{total}</td>
+                            <td colSpan="2"></td>
+                        </tr>
+                    </tfoot>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                        {items.map(item => {
+                            const asset = prices.filter(price => price.name === item.currency);
+                            const price = asset.length > 0 ? asset[0].prices.EUR : 0;
+                            return (
+                                <List
+                                    key={item.id}
+                                    values={item}
+                                    price={price}
+                                    handleEditItem={onEditItem}
+                                    handleDeleteItem={onDeleteItem}
+                                />
+                            );
+                        })}
+                    </tbody>
+                </table>
+            </div>
+        </>
     );
 };
 

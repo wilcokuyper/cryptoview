@@ -1,52 +1,79 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import './style.css';
+import { Link } from '@tanstack/react-router';
+import { Menu, MenuButton, MenuItems, MenuItem, Transition } from '@headlessui/react';
+import useAuthStore from '../../stores/authStore';
 
 const Header = () => {
-    const auth = useSelector(state => state.auth);
+    const { isAuthenticated, user } = useAuthStore();
 
-    const renderAuthContent = auth => {
-        switch(auth.isAuthenticated) {
-        case null:
-            return;
-  
-        case false:
-            return <li><a href="/login/facebook" className="nav-link">Login</a></li>;
-  
-        default:
+    const renderAuthContent = () => {
+        if (isAuthenticated === null) {
+            return null;
+        }
+
+        if (!isAuthenticated) {
             return (
-                <li className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                        <img src={auth.user.avatar} className="mr-3 round" height="38"/>
-                        {auth.user.name}
-                    </a>
-                    <div className="dropdown-menu">
-                        <a className="dropdown-item" href="/logout">Logout</a>
-                    </div>
-                </li>
+                <a href="/login/facebook" className="text-white hover:text-gray-200 px-3 py-2">
+                    Login
+                </a>
             );
         }
+
+        return (
+            <Menu as="div" className="relative">
+                <MenuButton className="flex items-center text-white hover:text-gray-200 px-3 py-2">
+                    <img
+                        src={user.avatar}
+                        className="rounded-full mr-3 h-9 w-9"
+                        alt={`${user.name}'s avatar`}
+                    />
+                    {user.name}
+                    <svg className="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            fillRule="evenodd"
+                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                            clipRule="evenodd"
+                        />
+                    </svg>
+                </MenuButton>
+                <Transition
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                >
+                    <MenuItems className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+                        <MenuItem>
+                            {({ active }) => (
+                                <a
+                                    href="/logout"
+                                    className={`block px-4 py-2 text-sm ${
+                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                                    }`}
+                                >
+                                    Logout
+                                </a>
+                            )}
+                        </MenuItem>
+                    </MenuItems>
+                </Transition>
+            </Menu>
+        );
     };
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-info mb-5">
-
-            <div className="container">
-
-                <Link className="navbar-brand" to="/">Cryptoview</Link>
-
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarNav">
-                    <ul className="navbar-nav ml-auto">
-                        {renderAuthContent(auth)}
-                    </ul>
+        <nav className="bg-brand-cyan shadow-sm mb-5">
+            <div className="max-w-7xl mx-auto px-4">
+                <div className="flex items-center justify-between h-16">
+                    <Link className="text-white text-xl font-bold" to="/">
+                        Cryptoview
+                    </Link>
+                    <div className="flex items-center">
+                        {renderAuthContent()}
+                    </div>
                 </div>
-
             </div>
-
         </nav>
     );
 };

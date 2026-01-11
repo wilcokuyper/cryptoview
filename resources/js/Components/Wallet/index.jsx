@@ -1,52 +1,48 @@
 import PropTypes from 'prop-types';
-import React , { useEffect }from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import { useEffect } from 'react';
 import numeral from 'numeral';
-import {fetchPrices, deleteWalletItem} from '../../actions';
+import useCurrencyStore from '../../stores/currencyStore';
+import useWalletStore from '../../stores/walletStore';
 import CardView from './CardView';
 import ListView from './ListView';
 
 const Wallet = ({ handleAddItem, handleEditItem, list }) => {
-    const prices = useSelector(state => state.currencies.prices);
-    const items = useSelector(state => state.wallet.assets);
+    const prices = useCurrencyStore(state => state.prices);
+    const fetchPrices = useCurrencyStore(state => state.fetchPrices);
+    const assets = useWalletStore(state => state.assets);
+    const deleteWalletItem = useWalletStore(state => state.deleteWalletItem);
 
-    const dispatch = useDispatch();
-
-    const deleteItem = id => dispatch(deleteWalletItem(id));
-
-    const handeDeleteItem = id => deleteItem(id);
+    const handleDeleteItem = id => deleteWalletItem(id);
 
     useEffect(() => {
-        const interval = setInterval(() => dispatch(fetchPrices()), 10000);
+        const interval = setInterval(() => fetchPrices(), 10000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [fetchPrices]);
 
-    const totalValue = items.reduce((sum, item) => {
+    const totalValue = assets.reduce((sum, item) => {
         const asset = prices.filter(price => price.name === item.currency);
         return asset.length !== 0 ? sum += item.amount * asset[0].prices.EUR : 0;
     }, 0);
 
-    return (
-        <React.Fragment>
-            { list
-                ? <ListView
-                    items={items}
-                    prices={prices}
-                    total={numeral(totalValue).format('0,0.00')}
-                    onAddItem={handleAddItem}
-                    onDeleteItem={handeDeleteItem}
-                    onEditItem={handleEditItem}
-                />
-                : <CardView
-                    items={items}
-                    prices={prices}
-                    total={numeral(totalValue).format('0,0.00')}
-                    onAddItem={handleAddItem}
-                    onDeleteItem={handeDeleteItem}
-                    onEditItem={handleEditItem}
-                /> }
-        </React.Fragment>    
+    return list ? (
+        <ListView
+            items={assets}
+            prices={prices}
+            total={numeral(totalValue).format('0,0.00')}
+            onAddItem={handleAddItem}
+            onDeleteItem={handleDeleteItem}
+            onEditItem={handleEditItem}
+        />
+    ) : (
+        <CardView
+            items={assets}
+            prices={prices}
+            total={numeral(totalValue).format('0,0.00')}
+            onAddItem={handleAddItem}
+            onDeleteItem={handleDeleteItem}
+            onEditItem={handleEditItem}
+        />
     );
 };
 
