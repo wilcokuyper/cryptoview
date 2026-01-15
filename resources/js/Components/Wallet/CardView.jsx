@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import Card from './Card';
 import { FaPlus } from "react-icons/fa";
+import { getPriceForCurrency } from '../../utils/priceUtils';
 
 const CardView = ({ onAddItem, onDeleteItem, onEditItem, items, prices, total }) => {
     return (
@@ -19,20 +20,15 @@ const CardView = ({ onAddItem, onDeleteItem, onEditItem, items, prices, total })
                 </button>
             </div>
             <div className="flex flex-wrap -mx-2">
-                {items.map(item => {
-                    const asset = prices.filter(price => price.name === item.currency);
-                    const price = asset.length > 0 ? asset[0].prices.EUR : 0;
-
-                    return (
-                        <Card
-                            key={item.id}
-                            values={item}
-                            price={price}
-                            handleEditItem={onEditItem}
-                            handleDeleteItem={onDeleteItem}
-                        />
-                    );
-                })}
+                {items.map(item => (
+                    <Card
+                        key={item.id}
+                        values={item}
+                        price={getPriceForCurrency(item.currency, prices)}
+                        handleEditItem={onEditItem}
+                        handleDeleteItem={onDeleteItem}
+                    />
+                ))}
             </div>
         </>
     );

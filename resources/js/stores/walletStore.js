@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import axios from 'axios';
+import api from '../services/api';
 
 const useWalletStore = create((set) => ({
     assets: [],
@@ -10,7 +10,7 @@ const useWalletStore = create((set) => ({
     fetchWallet: async () => {
         set({ isLoading: true, error: null });
         try {
-            const res = await axios.get('/api/wallet');
+            const res = await api.wallet.get();
             set({ assets: res.data, isLoading: false });
         } catch (error) {
             set({ error: error.message, isLoading: false });
@@ -20,7 +20,7 @@ const useWalletStore = create((set) => ({
     updateWalletItem: async (values, update = false) => {
         set({ isLoading: true, error: null });
         try {
-            const res = await axios.post('/api/wallet', { ...values, update });
+            const res = await api.wallet.create({ ...values, update });
             set({ assets: res.data, isLoading: false });
         } catch (error) {
             set({ error: error.message, isLoading: false });
@@ -30,7 +30,7 @@ const useWalletStore = create((set) => ({
     deleteWalletItem: async (id) => {
         set({ isLoading: true, error: null });
         try {
-            const res = await axios.delete(`/api/wallet/${id}`);
+            const res = await api.wallet.delete(id);
             set({ assets: res.data, isLoading: false });
         } catch (error) {
             set({ error: error.message, isLoading: false });

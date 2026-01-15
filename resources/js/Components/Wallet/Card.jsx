@@ -1,30 +1,15 @@
-import axios from 'axios';
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
+import { memo } from 'react';
 import moment from 'moment';
 import numeral from 'numeral';
 import Animated from './Animated';
 import { Sparklines, SparklinesLine, SparklinesSpots } from 'react-sparklines';
 import { FaEdit, FaTrash } from "react-icons/fa";
+import useHistoricalData from '../../hooks/useHistoricalData';
 
 const Card = ({ values, price, handleEditItem, handleDeleteItem }) => {
-    const [historicalData, setHistoricalData] = useState([]);
-    const [historicalDataLoading, setHistoricalDataLoading] = useState(true);
     const { id, currency, amount, updated_at } = values;
-
-    useEffect(() => {
-        async function getHistoricalData(currency) {
-            const res = await axios.get(`api/history?currency=${currency}&count=30`);
-            setHistoricalData(res.data);
-            setHistoricalDataLoading(false);
-        }
-
-        getHistoricalData(currency);
-
-        const interval = setInterval(() => getHistoricalData(currency), 60000);
-
-        return () => clearInterval(interval);
-    }, [currency]);
+    const { data: historicalData, loading: historicalDataLoading } = useHistoricalData(currency);
 
     return (
         <div className="w-full md:w-1/2 lg:w-1/3 px-2 mb-4">
@@ -96,4 +81,4 @@ Card.propTypes = {
     handleEditItem: PropTypes.func
 };
 
-export default Card;
+export default memo(Card);

@@ -1,13 +1,44 @@
 {
+  "_index-DaY7D9-i.js": {
+    "file": "assets/index-DaY7D9-i.js",
+    "name": "index",
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
   "resources/css/app.css": {
-    "file": "assets/app-Wass-huc.css",
+    "file": "assets/app-DKFwTppy.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
+  "resources/js/Components/Dashboard/index.jsx": {
+    "file": "assets/index-BQOHSzoQ.js",
+    "name": "index",
+    "src": "resources/js/Components/Dashboard/index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_index-DaY7D9-i.js"
+    ]
+  },
+  "resources/js/Components/Login/index.jsx": {
+    "file": "assets/index-DZKmDkg7.js",
+    "name": "index",
+    "src": "resources/js/Components/Login/index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_index-DaY7D9-i.js"
+    ]
+  },
   "resources/js/app.jsx": {
-    "file": "assets/app-C3fuM-VV.js",
+    "file": "assets/app-DHuMdkVt.js",
     "name": "app",
     "src": "resources/js/app.jsx",
-    "isEntry": true
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/Components/Dashboard/index.jsx",
+      "resources/js/Components/Login/index.jsx"
+    ]
   }
 }

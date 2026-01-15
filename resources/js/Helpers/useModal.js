@@ -1,17 +1,21 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 const useModal = () => {
-    const [showing, setShowing] = useState(false);
+    const [isShowing, setIsShowing] = useState(false);
 
-    function toggle()
-    {
-        setShowing(!showing);
-    }
+    const toggle = useCallback(() => {
+        setIsShowing(prev => !prev);
+    }, []);
 
-    return [
-        showing,
-        toggle
-    ];
+    const open = useCallback(() => {
+        setIsShowing(true);
+    }, []);
+
+    const close = useCallback(() => {
+        setIsShowing(false);
+    }, []);
+
+    return { isShowing, toggle, open, close };
 };
 
 export default useModal;

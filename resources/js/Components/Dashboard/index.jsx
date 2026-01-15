@@ -13,8 +13,8 @@ const Dashboard = () => {
     const currencyTypes = useCurrencyStore(state => state.types);
     const { updateWalletItem, setSelectedAsset } = useWalletStore();
 
-    const [showingAddModal, toggleAddModal] = useModal();
-    const [showingEditModal, toggleEditModal] = useModal();
+    const { isShowing: showingAddModal, toggle: toggleAddModal } = useModal();
+    const { isShowing: showingEditModal, toggle: toggleEditModal } = useModal();
     const [isListView, toggleListView] = useState(true);
 
     const updateWallet = (values, update = false) => {

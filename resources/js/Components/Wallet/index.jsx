@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useEffect, useMemo, useCallback } from 'react';
 import numeral from 'numeral';
 import useCurrencyStore from '../../stores/currencyStore';
 import useWalletStore from '../../stores/walletStore';
+import { calculateTotalValue } from '../../utils/priceUtils';
+import { PRICE_REFRESH_INTERVAL } from '../../constants/intervals';
 import CardView from './CardView';
 import ListView from './ListView';
 
@@ -12,18 +14,18 @@ const Wallet = ({ handleAddItem, handleEditItem, list }) => {
     const assets = useWalletStore(state => state.assets);
     const deleteWalletItem = useWalletStore(state => state.deleteWalletItem);
 
-    const handleDeleteItem = id => deleteWalletItem(id);
+    const handleDeleteItem = useCallback(id => deleteWalletItem(id), [deleteWalletItem]);
 
     useEffect(() => {
-        const interval = setInterval(() => fetchPrices(), 10000);
+        const interval = setInterval(fetchPrices, PRICE_REFRESH_INTERVAL);
 
         return () => clearInterval(interval);
     }, [fetchPrices]);
 
-    const totalValue = assets.reduce((sum, item) => {
-        const asset = prices.filter(price => price.name === item.currency);
-        return asset.length !== 0 ? sum += item.amount * asset[0].prices.EUR : 0;
-    }, 0);
+    const totalValue = useMemo(
+        () => calculateTotalValue(assets, prices),
+        [assets, prices]
+    );
 
     return list ? (
         <ListView

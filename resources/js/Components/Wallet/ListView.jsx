@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import List from './List';
 import { FaPlus } from "react-icons/fa";
+import { getPriceForCurrency } from '../../utils/priceUtils';
 
 const ListView = ({ onAddItem, onDeleteItem, onEditItem, items, prices, total }) => {
     return (
@@ -45,19 +46,15 @@ const ListView = ({ onAddItem, onDeleteItem, onEditItem, items, prices, total })
                         </tr>
                     </tfoot>
                     <tbody className="bg-white divide-y divide-gray-200">
-                        {items.map(item => {
-                            const asset = prices.filter(price => price.name === item.currency);
-                            const price = asset.length > 0 ? asset[0].prices.EUR : 0;
-                            return (
-                                <List
-                                    key={item.id}
-                                    values={item}
-                                    price={price}
-                                    handleEditItem={onEditItem}
-                                    handleDeleteItem={onDeleteItem}
-                                />
-                            );
-                        })}
+                        {items.map(item => (
+                            <List
+                                key={item.id}
+                                values={item}
+                                price={getPriceForCurrency(item.currency, prices)}
+                                handleEditItem={onEditItem}
+                                handleDeleteItem={onDeleteItem}
+                            />
+                        ))}
                     </tbody>
                 </table>
             </div>

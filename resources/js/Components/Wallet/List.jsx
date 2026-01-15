@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import numeral from 'numeral';
@@ -47,4 +48,4 @@ List.propTypes = {
     handleEditItem: PropTypes.func
 };
 
-export default List;
+export default memo(List);

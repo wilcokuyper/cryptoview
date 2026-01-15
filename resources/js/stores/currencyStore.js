@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import axios from 'axios';
+import api from '../services/api';
 
 const useCurrencyStore = create((set) => ({
     types: [],
@@ -10,7 +10,7 @@ const useCurrencyStore = create((set) => ({
     fetchCurrencies: async () => {
         set({ isLoading: true, error: null });
         try {
-            const res = await axios.get('/api/currencies');
+            const res = await api.currencies();
             set({ types: res.data, isLoading: false });
         } catch (error) {
             set({ error: error.message, isLoading: false });
@@ -18,8 +18,9 @@ const useCurrencyStore = create((set) => ({
     },
 
     fetchPrices: async () => {
+        set({ error: null });
         try {
-            const res = await axios.get('/api/prices');
+            const res = await api.prices();
             set({ prices: res.data });
         } catch (error) {
             set({ error: error.message });
