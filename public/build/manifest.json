@@ -1,38 +1,29 @@
 {
-  "_index-DaY7D9-i.js": {
-    "file": "assets/index-DaY7D9-i.js",
-    "name": "index",
-    "imports": [
-      "resources/js/app.jsx"
-    ]
-  },
   "resources/css/app.css": {
-    "file": "assets/app-DKFwTppy.css",
+    "file": "assets/app-Cnoz9rLK.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/Components/Dashboard/index.jsx": {
-    "file": "assets/index-BQOHSzoQ.js",
+    "file": "assets/index-S2Z6UY9Y.js",
     "name": "index",
     "src": "resources/js/Components/Dashboard/index.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "resources/js/app.jsx",
-      "_index-DaY7D9-i.js"
+      "resources/js/app.jsx"
     ]
   },
   "resources/js/Components/Login/index.jsx": {
-    "file": "assets/index-DZKmDkg7.js",
+    "file": "assets/index-CxbT37CS.js",
     "name": "index",
     "src": "resources/js/Components/Login/index.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "resources/js/app.jsx",
-      "_index-DaY7D9-i.js"
+      "resources/js/app.jsx"
     ]
   },
   "resources/js/app.jsx": {
-    "file": "assets/app-DHuMdkVt.js",
+    "file": "assets/app-HYJRHV8e.js",
     "name": "app",
     "src": "resources/js/app.jsx",
     "isEntry": true,

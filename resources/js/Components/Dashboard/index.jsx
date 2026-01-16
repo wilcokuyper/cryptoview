@@ -7,7 +7,7 @@ import AddAsset from '../../Helpers/Dialogs/AddAsset';
 import EditAsset from '../../Helpers/Dialogs/EditAsset';
 import Modal from '../Modal';
 import useModal from '../../Helpers/useModal';
-import { FaList, FaTable } from "react-icons/fa";
+import { FaThLarge, FaList } from "react-icons/fa";
 
 const Dashboard = () => {
     const currencyTypes = useCurrencyStore(state => state.types);
@@ -32,34 +32,41 @@ const Dashboard = () => {
         toggleEditModal();
     };
 
-    const activeBtnClass = 'inline-flex items-center px-3 py-2 bg-brand-cyan text-white font-medium hover:bg-brand-cyan/90';
-    const inactiveBtnClass = 'inline-flex items-center px-3 py-2 bg-gray-100 text-gray-800 font-medium hover:bg-gray-200';
-
     return (
-        <div>
-            <div className="max-w-7xl mx-auto px-4">
-                <div className="flex flex-wrap items-center mb-4">
-                    <div className="flex-1">
-                        <h1 className="text-3xl font-bold">Cryptoview</h1>
-                        <p className="text-gray-600">View your cryptocurrency balances</p>
+        <div className="py-6">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
+                    <div>
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Portfolio</h1>
+                        <p className="text-gray-500 dark:text-gray-400 mt-1">Track your cryptocurrency holdings</p>
                     </div>
-                    <div className="mb-2">
-                        <div className="inline-flex rounded-md shadow-sm" role="group" aria-label="View toggle">
-                            <button
-                                type="button"
-                                className={`${isListView ? activeBtnClass : inactiveBtnClass} rounded-l-md`}
-                                onClick={() => toggleListView(true)}
-                            >
-                                <FaList />
-                            </button>
-                            <button
-                                type="button"
-                                className={`${!isListView ? activeBtnClass : inactiveBtnClass} rounded-r-md`}
-                                onClick={() => toggleListView(false)}
-                            >
-                                <FaTable />
-                            </button>
-                        </div>
+                    <div className="flex items-center gap-2 p-1 bg-gray-100 dark:bg-slate-800 rounded-xl">
+                        <button
+                            type="button"
+                            onClick={() => toggleListView(true)}
+                            className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
+                                isListView
+                                    ? 'bg-white dark:bg-slate-700 text-gray-900 dark:text-white shadow-sm'
+                                    : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                            }`}
+                            aria-label="List view"
+                        >
+                            <FaList className="w-4 h-4" />
+                            <span className="hidden sm:inline">List</span>
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => toggleListView(false)}
+                            className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
+                                !isListView
+                                    ? 'bg-white dark:bg-slate-700 text-gray-900 dark:text-white shadow-sm'
+                                    : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                            }`}
+                            aria-label="Card view"
+                        >
+                            <FaThLarge className="w-4 h-4" />
+                            <span className="hidden sm:inline">Cards</span>
+                        </button>
                     </div>
                 </div>
 
@@ -73,7 +80,7 @@ const Dashboard = () => {
             <Modal
                 isShowing={showingAddModal}
                 hide={toggleAddModal}
-                title="Add a currency to your wallet"
+                title="Add to Portfolio"
             >
                 <AddAsset
                     currencies={currencyTypes}
@@ -85,7 +92,7 @@ const Dashboard = () => {
             <Modal
                 isShowing={showingEditModal}
                 hide={toggleEditModal}
-                title="Edit your wallet"
+                title="Edit Holdings"
             >
                 <EditAsset
                     onSubmit={values => updateWallet(values, true)}

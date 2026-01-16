@@ -10,11 +10,16 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <!-- Font preconnect for better performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     @vite(['resources/css/app.css'])
 </head>
 <body class="bg-body-bg font-sans text-base antialiased">
     <div id="app">
-        <nav class="bg-brand-cyan shadow-sm mb-5">
+        <nav class="bg-primary shadow-sm mb-5">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="flex items-center justify-between h-16">
                     <!-- Branding Image -->

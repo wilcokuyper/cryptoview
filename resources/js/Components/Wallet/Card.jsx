@@ -1,76 +1,117 @@
 import PropTypes from 'prop-types';
 import { memo } from 'react';
-import moment from 'moment';
+import { motion, useReducedMotion } from 'motion/react';
 import numeral from 'numeral';
 import Animated from './Animated';
 import { Sparklines, SparklinesLine, SparklinesSpots } from 'react-sparklines';
 import { FaEdit, FaTrash } from "react-icons/fa";
 import useHistoricalData from '../../hooks/useHistoricalData';
 
+const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+    });
+};
+
 const Card = ({ values, price, handleEditItem, handleDeleteItem }) => {
     const { id, currency, amount, updated_at } = values;
     const { data: historicalData, loading: historicalDataLoading } = useHistoricalData(currency);
+    const totalValue = price * amount;
+    const shouldReduceMotion = useReducedMotion();
+
+    const confirmDelete = () => {
+        if (window.confirm(`Are you sure you want to delete ${currency}? This action cannot be undone.`)) {
+            handleDeleteItem(id);
+        }
+    };
 
     return (
-        <div className="w-full md:w-1/2 lg:w-1/3 px-2 mb-4">
-            <div className="bg-white rounded-lg shadow border border-gray-200 p-2">
-                <div className="flex mb-1">
-                    <h3 className="flex-1 text-xl font-semibold">{currency}</h3>
-                    <div>
-                        <div className="inline-flex rounded-md shadow-sm" role="group" aria-label={`Edit currency ${currency}`}>
-                            <button
-                                type="button"
-                                className="inline-flex items-center px-2 py-1 bg-gray-100 text-gray-800 text-sm rounded-l-md hover:bg-gray-200"
-                                onClick={() => handleEditItem(values)}
-                            >
-                                <FaEdit aria-hidden="true" />
-                            </button>
-                            <button
-                                type="button"
-                                className="inline-flex items-center px-2 py-1 bg-gray-100 text-gray-800 text-sm rounded-r-md hover:bg-gray-200"
-                                onClick={() => handleDeleteItem(id)}
-                            >
-                                <FaTrash aria-hidden="true" />
-                            </button>
+        <motion.div
+            layout={!shouldReduceMotion}
+            initial={false}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.95 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.2 }}
+            className="group bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 hover:shadow-md hover:border-gray-200 dark:hover:border-slate-600 transition-[shadow,border-color] duration-300"
+        >
+            <div className="flex items-start justify-between mb-4">
+                <div>
+                    <div className="flex items-center gap-2 mb-1">
+                        <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
+                            <span className="text-primary font-bold text-sm">{currency.slice(0, 2)}</span>
+                        </div>
+                        <div>
+                            <h3 className="font-semibold text-gray-900 dark:text-white">{currency}</h3>
+                            <p className="text-xs text-gray-400 dark:text-gray-500">{numeral(amount).format('0,0.0000')} units</p>
                         </div>
                     </div>
                 </div>
-                <div className="flex">
-                    <div className="flex-1 min-h-[60px]">
-                        {historicalDataLoading ? (
-                            <div className="inline-block relative w-14 h-full ml-[calc(50%-24px)]">
-                                <div className="absolute top-[calc(50%-4px)] left-2 w-2 h-2 rounded-full bg-gray-500 animate-loading-1" />
-                                <div className="absolute top-[calc(50%-4px)] left-2 w-2 h-2 rounded-full bg-gray-500 animate-loading-2" />
-                                <div className="absolute top-[calc(50%-4px)] left-6 w-2 h-2 rounded-full bg-gray-500 animate-loading-2" />
-                                <div className="absolute top-[calc(50%-4px)] left-10 w-2 h-2 rounded-full bg-gray-500 animate-loading-3" />
-                            </div>
-                        ) : (
-                            <Sparklines data={historicalData} margin={20}>
-                                <SparklinesLine
-                                    style={{ strokeWidth: 2, stroke: '#336aff', fill: 'none' }}
-                                />
-                                <SparklinesSpots
-                                    size={3}
-                                    style={{ stroke: '#336aff', strokeWidth: 2, fill: 'white' }}
-                                />
-                            </Sparklines>
-                        )}
-                    </div>
-                    <div className="w-[120px] pl-2.5 border-l border-gray-300">
-                        <h5 className="text-right text-lg">
-                            <Animated value={price}>
-                                <strong>{numeral(price).format('0,0.00')}</strong>
-                            </Animated>
-                        </h5>
-                        <div className="text-right">{numeral(amount).format('0,0.0000')}</div>
-                    </div>
-                </div>
-                <div className="flex justify-between">
-                    <div className="text-left text-gray-500 text-sm">{moment(updated_at).format('D-M-Y')}</div>
-                    <div className="text-right"><em>{numeral(price * amount).format('0,0.00')}</em></div>
+                <div className="flex gap-1 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-150">
+                    <button
+                        type="button"
+                        className="min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-400 dark:text-gray-500 hover:text-primary hover:bg-primary/5 dark:hover:bg-primary/10 rounded-lg transition-colors duration-150"
+                        onClick={() => handleEditItem(values)}
+                        aria-label={`Edit ${currency}`}
+                    >
+                        <FaEdit className="w-4 h-4" />
+                    </button>
+                    <button
+                        type="button"
+                        className="min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-400 dark:text-gray-500 hover:text-danger hover:bg-danger/5 dark:hover:bg-danger/10 rounded-lg transition-colors duration-150"
+                        onClick={confirmDelete}
+                        aria-label={`Delete ${currency}`}
+                    >
+                        <FaTrash className="w-4 h-4" />
+                    </button>
                 </div>
             </div>
-        </div>
+
+            <div className="h-16 mb-4">
+                {historicalDataLoading ? (
+                    <div className="flex items-center justify-center h-full" role="status" aria-label={`Loading ${currency} price history`}>
+                        <div className="flex gap-1">
+                            <div className="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 animate-loading-1" />
+                            <div className="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 animate-loading-2" />
+                            <div className="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 animate-loading-3" />
+                        </div>
+                        <span className="sr-only">Loading price history</span>
+                    </div>
+                ) : (
+                    <div aria-label={`${currency} price trend chart`} role="img">
+                        <Sparklines data={historicalData} margin={6}>
+                            <SparklinesLine
+                                style={{ strokeWidth: 2, stroke: 'var(--color-primary)', fill: 'none' }}
+                            />
+                            <SparklinesSpots
+                                size={2}
+                                style={{ stroke: 'var(--color-primary)', strokeWidth: 2, fill: 'white' }}
+                            />
+                        </Sparklines>
+                    </div>
+                )}
+            </div>
+
+            <div className="flex items-end justify-between pt-3 border-t border-gray-100 dark:border-slate-700">
+                <div>
+                    <p className="text-xs text-gray-400 dark:text-gray-500 mb-0.5">Current Price</p>
+                    <Animated value={price}>
+                        <span className="text-lg font-semibold text-gray-900 dark:text-white">
+                            {numeral(price).format('0,0.00')}
+                        </span>
+                    </Animated>
+                </div>
+                <div className="text-right">
+                    <p className="text-xs text-gray-400 dark:text-gray-500 mb-0.5">Total Value</p>
+                    <p className="text-lg font-bold text-primary">{numeral(totalValue).format('0,0.00')}</p>
+                </div>
+            </div>
+
+            <p className="text-xs text-gray-400 dark:text-gray-500 mt-3 text-right">
+                Updated {formatDate(updated_at)}
+            </p>
+        </motion.div>
     );
 };
 
