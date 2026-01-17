@@ -13,7 +13,7 @@ const ListView = ({ onAddItem, onDeleteItem, onEditItem, items, prices, total })
                     <p className="text-2xl font-bold text-gray-900 dark:text-white">{total}</p>
                 </div>
                 <button
-                    className="inline-flex items-center gap-2 px-5 py-2.5 min-h-[44px] bg-primary text-white font-medium rounded-xl hover:bg-primary-hover shadow-sm transition-colors duration-150"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 min-h-11 bg-primary text-white font-medium rounded-xl hover:bg-primary-hover shadow-sm transition-colors duration-150"
                     onClick={onAddItem}
                 >
                     <FaPlus className="w-4 h-4" />
@@ -26,22 +26,22 @@ const ListView = ({ onAddItem, onDeleteItem, onEditItem, items, prices, total })
                     <table className="min-w-full">
                         <thead>
                             <tr className="bg-gray-50/80 dark:bg-slate-700/50">
-                                <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                <th scope="col" className="px-2 sm:px-4 lg:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                                     Asset
                                 </th>
-                                <th scope="col" className="px-6 py-4 text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                <th scope="col" className="px-2 sm:px-4 lg:px-6 py-3 sm:py-4 text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                                     Price
                                 </th>
-                                <th scope="col" className="px-6 py-4 text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                <th scope="col" className="px-2 sm:px-4 lg:px-6 py-3 sm:py-4 text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                                     Holdings
                                 </th>
-                                <th scope="col" className="px-6 py-4 text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                <th scope="col" className="px-2 sm:px-4 lg:px-6 py-3 sm:py-4 text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                                     Value
                                 </th>
-                                <th scope="col" className="hidden md:table-cell px-6 py-4 text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                <th scope="col" className="hidden md:table-cell px-2 sm:px-4 lg:px-6 py-3 sm:py-4 text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                                     Updated
                                 </th>
-                                <th scope="col" className="px-6 py-4 w-20">
+                                <th scope="col" className="px-2 sm:px-4 lg:px-6 py-3 sm:py-4 w-12 sm:w-20">
                                     <span className="sr-only">Actions</span>
                                 </th>
                             </tr>
@@ -71,7 +71,7 @@ const ListView = ({ onAddItem, onDeleteItem, onEditItem, items, prices, total })
                         <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-1">No assets yet</h3>
                         <p className="text-gray-500 dark:text-gray-400 mb-4">Add your first cryptocurrency to start tracking</p>
                         <button
-                            className="inline-flex items-center gap-2 px-5 py-2.5 min-h-[44px] bg-primary text-white font-medium rounded-xl hover:bg-primary-hover transition-colors duration-150"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 min-h-11 bg-primary text-white font-medium rounded-xl hover:bg-primary-hover transition-colors duration-150"
                             onClick={onAddItem}
                         >
                             <FaPlus className="w-4 h-4" />
