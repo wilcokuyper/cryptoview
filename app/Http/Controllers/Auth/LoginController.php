@@ -34,7 +34,7 @@ class LoginController extends Controller implements HandlesAuthentication
 
     public function logout(): \Illuminate\Http\RedirectResponse
     {
-        \Auth::logout();
+        auth()->logout();
         return redirect('/');
     }
 

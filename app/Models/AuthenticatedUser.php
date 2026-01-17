@@ -26,7 +26,7 @@ class AuthenticatedUser
 
         $user = $this->users->findByEmailOrCreate($this->getUser($provider));
 
-        \Auth::login($user, true);
+        auth()->login($user, true);
 
         return $handler->userHasLoggedIn($user);
     }
