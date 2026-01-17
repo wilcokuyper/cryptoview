@@ -26,7 +26,7 @@ const Header = () => {
         return (
             <Menu as="div" className="relative">
                 <MenuButton className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors duration-150">
-                    <span className="text-gray-700 dark:text-gray-200 font-medium">{user.name}</span>
+                    <span className="hidden sm:inline text-gray-700 dark:text-gray-200 font-medium">{user.name}</span>
                     <img
                         src={user.avatar}
                         className="rounded-full h-9 w-9 ring-2 ring-transparent hover:ring-primary/20 transition-all duration-150"
