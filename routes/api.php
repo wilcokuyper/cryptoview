@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['auth:api'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/user', [LoginController::class, 'getUser']);
 
     Route::get('/currencies', [CurrencyController::class, 'getCurrencyList']);

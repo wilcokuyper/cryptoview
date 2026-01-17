@@ -19,6 +19,7 @@ class CurrencyController extends Controller
 
     public function getCurrencyList(CurrencyReader $reader, bool $default = false): JsonResponse
     {
+        ini_set('memory_limit', '256M');
         $currency_list = Cache::remember(
             'currency_list',
             10,

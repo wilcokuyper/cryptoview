@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Collection;
 class WalletRepository
 {
     /**
-     * @param User $user
      * @return Collection<WalletItem>
      */
     public function getWallet(User $user): Collection
@@ -16,7 +15,6 @@ class WalletRepository
     }
 
     /**
-     * @param User $user
      * @return Collection<string>
      */
     public function getCurrenciesInWallet(User $user): Collection
@@ -26,12 +24,7 @@ class WalletRepository
         ])->distinct()->get();
     }
 
-    /**
-     * @param User $user
-     * @param $currency
-     * @return WalletItem|null
-     */
-    public function getItemByCurrency(User $user, $currency): ?WalletItem
+    public function getItemByCurrency(User $user, string $currency): ?WalletItem
     {
         return WalletItem::query()->where([
             ['userid', $user->id],
@@ -39,14 +32,7 @@ class WalletRepository
         ])->first();
     }
 
-    /**
-     * @param User $user
-     * @param $currency
-     * @param $amount
-     * @param $update
-     * @return WalletItem
-     */
-    public function updateOrCreateItem(User $user, $currency, $amount, $update = false): WalletItem
+    public function updateOrCreateItem(User $user, $currency, $amount, bool $update = false): WalletItem
     {
         $item = $this->getItemByCurrency($user, $currency);
         if (null === $item) {

@@ -24,7 +24,6 @@ class CryptoCompareProvider implements CryptoCurrencyDataContract
     }
 
     /**
-     * @return array
      * @throws JsonException
      */
     public function getSymbols(): array
@@ -33,12 +32,9 @@ class CryptoCompareProvider implements CryptoCurrencyDataContract
     }
 
     /**
-     * @param array $currencies
-     * @param string|null $convertTo
-     * @return array
      * @throws JsonException
      */
-    public function getPrices(array $currencies, string $convertTo = null): array
+    public function getPrices(array $currencies, ?string $convertTo = null): array
     {
         $prices = $this->request('/data/pricemulti', [
             'fsyms' => implode(',', $currencies),
@@ -57,18 +53,13 @@ class CryptoCompareProvider implements CryptoCurrencyDataContract
     }
 
     /**
-     * @param string $currency
-     * @param int $limit
-     * @param int $aggregate
-     * @param string|null $convertTo
-     * @return array
      * @throws JsonException
      */
     public function getHistoricalData(
         string $currency,
         int $limit = 10,
         int $aggregate = 1,
-        string $convertTo = null
+        ?string $convertTo = null
     ): array {
         $historicalData = $this->request('/data/v2/histominute', [
             'fsym' => $currency,
@@ -80,12 +71,6 @@ class CryptoCompareProvider implements CryptoCurrencyDataContract
         return $historicalData['Data']['Data'] ?? [];
     }
 
-    /**
-     * @param string $path
-     * @param array $data
-     * @return array
-     * @throws JsonException
-     */
     protected function request(string $path, array $data = []): array
     {
         $url = $this->buildRequest($path, $data);
@@ -95,11 +80,6 @@ class CryptoCompareProvider implements CryptoCurrencyDataContract
         return json_decode($json, true, 512, JSON_THROW_ON_ERROR);
     }
 
-    /**
-     * @param string $uri
-     * @param array $data
-     * @return string
-     */
     #[Pure]
     protected function buildRequest(string $uri, array $data = []): string
     {

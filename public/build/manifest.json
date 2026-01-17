@@ -1,0 +1,35 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app-DcoXPl8p.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/Components/Dashboard/index.jsx": {
+    "file": "assets/index-S2Z6UY9Y.js",
+    "name": "index",
+    "src": "resources/js/Components/Dashboard/index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
+  "resources/js/Components/Login/index.jsx": {
+    "file": "assets/index-CxbT37CS.js",
+    "name": "index",
+    "src": "resources/js/Components/Login/index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
+  "resources/js/app.jsx": {
+    "file": "assets/app-HYJRHV8e.js",
+    "name": "app",
+    "src": "resources/js/app.jsx",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/Components/Dashboard/index.jsx",
+      "resources/js/Components/Login/index.jsx"
+    ]
+  }
+}

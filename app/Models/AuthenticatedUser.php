@@ -18,13 +18,7 @@ class AuthenticatedUser
         $this->users = $users;
     }
 
-    /**
-     * @param string $provider
-     * @param bool $hasCode
-     * @param HandlesAuthentication $handler
-     * @return mixed
-     */
-    public function execute(string $provider, bool $hasCode, HandlesAuthentication $handler)
+    public function execute(string $provider, bool $hasCode, HandlesAuthentication $handler): \Illuminate\Http\RedirectResponse
     {
         if (!$hasCode) {
             return $this->getAuth($provider);
@@ -42,11 +36,7 @@ class AuthenticatedUser
         return Socialite::driver($provider)->redirect();
     }
 
-    /**
-     * @param  $provider
-     * @return mixed
-     */
-    protected function getUser($provider)
+    protected function getUser(string $provider): ?\Laravel\Socialite\Two\User
     {
         return Socialite::driver($provider)->stateless()->user();
     }

@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+/* Source paths for class detection */
+@source "../views/**/*.blade.php";
+@source "../js/**/*.{js,jsx}";
+
+/* Enable class-based dark mode instead of media query */
+@variant dark (&:where(.dark, .dark *));
+
+/* Custom theme configuration - Soft Finance Aesthetic */
+@theme {
+  /* Primary - Teal */
+  --color-primary: #0d9488;
+  --color-primary-hover: #0f766e;
+  --color-primary-light: #f0fdfa;
+
+  /* Semantic colors */
+  --color-success: #10b981;
+  --color-success-light: #d1fae5;
+  --color-danger: #f43f5e;
+  --color-danger-light: #ffe4e6;
+
+  /* Legacy brand colors (for compatibility) */
+  --color-brand-blue: #0d9488;
+  --color-brand-cyan: #0d9488;
+  --color-brand-green: #10b981;
+  --color-brand-red: #f43f5e;
+  --color-facebook: #1877f2;
+  --color-body-bg: #f9fafb;
+
+  /* Dark mode colors */
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+
+  /* Typography */
+  --font-family-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-size-base: 1rem;
+
+  /* Shadows */
+  --shadow-soft: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-card: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -1px rgba(0,0,0,0.04);
+  --shadow-card-hover: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
+
+  /* Loading animations */
+  --animate-loading-1: loading-1 0.6s infinite;
+  --animate-loading-2: loading-2 0.6s infinite;
+  --animate-loading-3: loading-3 0.6s infinite;
+}
+
+/* Loading animation keyframes */
+@keyframes loading-1 {
+  0% { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+
+@keyframes loading-2 {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(16px); }
+}
+
+@keyframes loading-3 {
+  0% { transform: scale(1); }
+  100% { transform: scale(0); }
+}
+
+/* Base styles */
+body {
+  background-color: var(--color-body-bg);
+  transition: background-color 0.2s ease;
+}
+
+/* Dark mode overrides */
+.dark {
+  --color-body-bg: #0f172a;
+  --color-primary: #14b8a6;
+  --color-primary-hover: #0d9488;
+  --color-primary-light: #1e293b;
+  --color-success-light: #064e3b;
+  --color-danger-light: #4c0519;
+}
+
+.dark body {
+  color-scheme: dark;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
