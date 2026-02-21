@@ -9,8 +9,11 @@ primary_region = "ams"
   auto_stop_machines = "stop"
   auto_start_machines = true
   min_machines_running = 0
+  max_machines_running = 1
 
 [env]
+  APP_NAME = "Cryptoview"
+  APP_URL = "https://cryptoview.wilcokuyper.com"
   APP_ENV = "production"
   APP_DEBUG = "false"
   LOG_CHANNEL = "stderr"
@@ -18,6 +21,8 @@ primary_region = "ams"
   CACHE_STORE = "file"
   QUEUE_CONNECTION = "sync"
   DB_CONNECTION = "pgsql"
+  SESSION_SECURE_COOKIE = "true"
+  SESSION_DOMAIN = "cryptoview.wilcokuyper.com"
 
 [deploy]
   release_command = "sh -c 'php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan migrate --force'"

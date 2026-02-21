@@ -29,9 +29,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Configure PHP-FPM to use Unix socket
-RUN sed -i 's|listen = 127.0.0.1:9000|listen = /var/run/php-fpm.sock|' /usr/local/etc/php-fpm.d/www.conf \
-    && sed -i 's|;listen.owner = www-data|listen.owner = www-data|' /usr/local/etc/php-fpm.d/www.conf \
-    && sed -i 's|;listen.group = www-data|listen.group = www-data|' /usr/local/etc/php-fpm.d/www.conf
+RUN echo '[www]\n\
+listen = /var/run/php-fpm.sock\n\
+listen.owner = www-data\n\
+listen.group = www-data\n\
+listen.mode = 0660' > /usr/local/etc/php-fpm.d/zz-socket.conf
 
 # Copy configuration files
 COPY docker/nginx.conf /etc/nginx/sites-available/default
