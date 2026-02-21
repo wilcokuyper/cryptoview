@@ -15,7 +15,7 @@ primary_region = "ams"
   APP_DEBUG = "false"
   LOG_CHANNEL = "stderr"
   SESSION_DRIVER = "database"
-  CACHE_STORE = "database"
+  CACHE_STORE = "file"
   QUEUE_CONNECTION = "sync"
   DB_CONNECTION = "pgsql"
 
